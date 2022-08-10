@@ -56,6 +56,11 @@ export const useAuthAction = () => {
     })
   }
 
+  const signInWithSlack = () => {
+    const provider = new OAuthProvider('oidc.slack')
+    return authSignIn.mutate({ provider })
+  }
+
   const signOut = () => {
     return authSignOut.mutate()
   }
@@ -63,6 +68,7 @@ export const useAuthAction = () => {
   return {
     signInWithGitHub,
     signInWithGitLab,
+    signInWithSlack,
     signOut
   }
 }

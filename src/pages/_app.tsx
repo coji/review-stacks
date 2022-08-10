@@ -5,7 +5,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { AppDefaultLayout } from '~/layouts/AppDefaultLayout'
 
-const theme = extendTheme({})
+const theme = extendTheme({
+  colors: {
+    slack: {
+      100: 'rgb(255,0,0)',
+      500: 'rgb(74, 21, 75)'
+    }
+  }
+})
 const queryClient = new QueryClient()
 
 type NextPageWithLayout = NextPage & {

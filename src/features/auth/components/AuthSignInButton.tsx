@@ -1,42 +1,72 @@
+import { useState } from 'react'
 import {
   Button,
-  ButtonProps,
-  Box,
+  Stack,
   Popover,
   PopoverProps,
   PopoverTrigger,
   PopoverContent,
+  PopoverHeader,
   PopoverArrow,
   PopoverCloseButton,
-  IconButton
+  chakra
 } from '@chakra-ui/react'
 import { useAuthAction } from '~/features/auth/hooks/useAuthAction'
 
-/*
-      <Icon mr="1">
-        <path
-          fill="currentColor"
-          d="M12 2C6.477 2 2 6.463 2 11.97c0 4.404 2.865 8.14 6.839 9.458.5.092.682-.216.682-.48 0-.236-.008-.864-.013-1.695-2.782.602-3.369-1.337-3.369-1.337-.454-1.151-1.11-1.458-1.11-1.458-.908-.618.069-.606.069-.606 1.003.07 1.531 1.027 1.531 1.027.892 1.524 2.341 1.084 2.91.828.092-.643.35-1.083.636-1.332-2.22-.251-4.555-1.107-4.555-4.927 0-1.088.39-1.979 1.029-2.675-.103-.252-.446-1.266.098-2.638 0 0 .84-.268 2.75 1.022A9.606 9.606 0 0112 6.82c.85.004 1.705.114 2.504.336 1.909-1.29 2.747-1.022 2.747-1.022.546 1.372.202 2.386.1 2.638.64.696 1.028 1.587 1.028 2.675 0 3.83-2.339 4.673-4.566 4.92.359.307.678.915.678 1.846 0 1.332-.012 2.407-.012 2.734 0 .267.18.577.688.48C19.137 20.107 22 16.373 22 11.969 22 6.463 17.522 2 12 2z"
-        ></path>
-      </Icon>
-*/
 export const AuthSignInButton: React.FC<PopoverProps> = ({ ...props }) => {
-  const { signInWithGitLab, signInWithGitHub } = useAuthAction()
+  const { signInWithSlack } = useAuthAction()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   return (
     <>
-      <Popover placement="bottom-end" closeOnBlur={false}>
+      <Popover placement="bottom-end" trigger="hover">
         <PopoverTrigger>
-          <Button colorScheme="blue">Sign in</Button>
+          <Button colorScheme="blue" size="sm">
+            サインイン
+          </Button>
         </PopoverTrigger>
         <PopoverContent p={5}>
+          <PopoverHeader fontWeight="semibold" textAlign="center">
+            サインイン
+          </PopoverHeader>
           <PopoverArrow />
           <PopoverCloseButton />
-          <Box p="4">
-            <Button colorScheme="orange" onClick={() => signInWithGitLab()}>
-              GitLab アカウントで続ける
+          <Stack p="4">
+            <Button
+              isLoading={isLoading}
+              colorScheme="slack"
+              onClick={() => {
+                setIsLoading(true)
+                signInWithSlack()
+              }}
+            >
+              <chakra.svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 122.8 122.8"
+                w="4"
+                h="4"
+                mr="2"
+              >
+                <path
+                  d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.5 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z"
+                  fill="#e01e5a"
+                ></path>
+                <path
+                  d="M45.2 25.8c-7.1 0-12.9-5.8-12.9-12.9S38.1 0 45.2 0s12.9 5.8 12.9 12.9v12.9H45.2zm0 6.5c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.2s5.8-12.9 12.9-12.9h32.3z"
+                  fill="#36c5f0"
+                ></path>
+                <path
+                  d="M97 45.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.2zm-6.5 0c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C64.7 5.8 70.5 0 77.6 0s12.9 5.8 12.9 12.9v32.3z"
+                  fill="#2eb67d"
+                ></path>
+                <path
+                  d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9zm0-6.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z"
+                  fill="#ecb22e"
+                ></path>
+              </chakra.svg>
+              Slack アカウントで続ける
             </Button>
-          </Box>
+          </Stack>
         </PopoverContent>
       </Popover>
     </>

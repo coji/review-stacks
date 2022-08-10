@@ -22,9 +22,11 @@ const upsertUser = async (
   user: User,
   additionalUserInfo: AdditionalUserInfo | null
 ) => {
-  const profileUrl = match(user.providerData.at(0)?.providerId)
-    .with('github', () => additionalUserInfo?.profile?.html_url as string)
-    .with('gitlab', () => additionalUserInfo?.profile?.profile as string)
+  const teamId = match(user.providerData.at(0)?.providerId)
+    .with(
+      'oidc.slack',
+      () => additionalUserInfo?.profile?.['https://slack.com/team_id'] as string
+    )
     .otherwise(() => undefined)
 
   const params = {
@@ -35,12 +37,12 @@ const upsertUser = async (
     emailVerified: user.emailVerified,
     providers: user.providerData.map((provider) => provider.providerId),
     updatedAt: serverTimestamp(),
-    profileUrl
+    teamId
   }
 
   // additional user info がない場合は更新しない
-  if (params.profileUrl === undefined) {
-    delete params.profileUrl
+  if (params.teamId === undefined) {
+    delete params.teamId
   }
 
   const docRef = doc(firestore, `/users/${user.uid}`)
@@ -71,6 +73,7 @@ export function useAuthUser<R = User | null>(
             }
 
             // ユーザ情報を保存
+            console.log(user, additionalUserInfo)
             await upsertUser(user, additionalUserInfo)
           }
 
