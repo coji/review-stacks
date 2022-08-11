@@ -33,7 +33,7 @@ export const StackItem = ({ item, ...rest }: StackItemProps) => {
           bgColor="gray.500"
           _hover={{ bgColor: 'gray.400' }}
           key={item.iid}
-          onMouseDown={() => window.open(item.web_url, '_blank')}
+          onPointerDown={() => window.open(item.web_url, '_blank')}
           {...rest}
         ></Box>
       </PopoverTrigger>

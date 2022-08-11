@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { Box, Grid, GridItem, Stack, Avatar } from '@chakra-ui/react'
 import { StackItem } from './StackItem'
 import { ReviewStackItem } from '~/interfaces/model'
@@ -13,14 +14,18 @@ export const StackList = ({ title, items }: StackListProps) => (
       {title}
     </Box>
 
-    <Grid gridTemplateColumns="auto 1fr" gap="4">
+    <Grid gridTemplateColumns="auto auto 1fr" gap="4">
       {items.map((item) => (
-        <>
+        <Fragment key={item.user.username}>
           <GridItem>
             <Stack direction="row" align="center">
               <Avatar size="sm" src={item.user.avatar} />
               <Box>{item.user.name}</Box>
             </Stack>
+          </GridItem>
+
+          <GridItem>
+            <Box whiteSpace="nowrap">{item.mergerequests.length}件</Box>
           </GridItem>
 
           <GridItem
@@ -29,7 +34,6 @@ export const StackList = ({ title, items }: StackListProps) => (
             gap="4"
             overflow="scroll"
           >
-            <Box whiteSpace="nowrap">{item.mergerequests.length}件</Box>
             <Box whiteSpace="nowrap">
               {item.mergerequests.map((mr, idx) => (
                 <StackItem
@@ -43,7 +47,7 @@ export const StackList = ({ title, items }: StackListProps) => (
               ))}
             </Box>
           </GridItem>
-        </>
+        </Fragment>
       ))}
     </Grid>
   </>
