@@ -15,7 +15,7 @@ const Home: NextPage = () => {
   }
 
   if (!teamData) {
-    return <div>loading...</div>
+    return <Center h="full">loading...</Center>
   }
 
   return (
