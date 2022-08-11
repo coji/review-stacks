@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-import { Box, Grid, GridItem, Stack, Avatar } from '@chakra-ui/react'
+import { Box, Grid, GridItem, Stack, Center, Avatar } from '@chakra-ui/react'
 import { StackItem } from './StackItem'
 import { ReviewStackItem } from '~/interfaces/model'
 
@@ -10,7 +10,7 @@ interface StackListProps {
 
 export const StackList = ({ title, items }: StackListProps) => (
   <>
-    <Box fontWeight="bold" my="4">
+    <Box fontWeight="bold" my="4" borderBottom="2px" borderColor="gray.200">
       {title}
     </Box>
 
@@ -20,12 +20,16 @@ export const StackList = ({ title, items }: StackListProps) => (
           <GridItem>
             <Stack direction="row" align="center">
               <Avatar size="sm" src={item.user.avatar} />
-              <Box>{item.user.name}</Box>
+              <Box w="9rem" noOfLines={1}>
+                {item.user.name}
+              </Box>
             </Stack>
           </GridItem>
 
           <GridItem>
-            <Box whiteSpace="nowrap">{item.mergerequests.length}件</Box>
+            <Center whiteSpace="nowrap" h="8" w="8">
+              {item.mergerequests.length}件
+            </Center>
           </GridItem>
 
           <GridItem

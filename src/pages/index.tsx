@@ -36,7 +36,7 @@ const Home: NextPage = () => {
           </Box>
         </Stack>
 
-        <Grid gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}>
+        <Grid gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }} gap="4">
           <GridItem>
             <StackList
               title="作成した、またはアサインされているMR"
