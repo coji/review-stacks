@@ -59,8 +59,12 @@ export const StackItem = ({ item, ...rest }: StackItemProps) => {
           <Box>
             レビュー: {reviewer ? (reviewer.name as string) : '未アサイン'}
           </Box>
-          <Box>更新: {dayjs(item.updated_at).format('YYYY-MM-DD(ddd)')}</Box>
-          <Box>作成: {dayjs(item.created_at).format('YYYY-MM-DD(ddd)')}</Box>
+          <Box>
+            更新: {dayjs(item.updated_at).format('YYYY-MM-DD(ddd) HH:mm')}
+          </Box>
+          <Box>
+            作成: {dayjs(item.created_at).format('YYYY-MM-DD(ddd) HH:mm')}
+          </Box>
         </PopoverBody>
         <PopoverFooter display="flex">
           <Spacer />
