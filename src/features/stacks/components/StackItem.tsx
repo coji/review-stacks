@@ -9,20 +9,26 @@ import {
   PopoverBody,
   PopoverFooter,
   Spacer,
-  ButtonGroup,
   Button,
   Stack
 } from '@chakra-ui/react'
 import { Types } from '@gitbeaker/node'
+import dayjs from '~/libs/dayjs'
 
 interface StackItemProps {
   item: Types.MergeRequestSchema
 }
 export const StackItem = ({ item }: StackItemProps) => {
+  const assignee = item.assignee ?? item.author
+  const reviewer = item.reviewers?.[0]
+
   return (
     <Popover placement="bottom" trigger="hover">
       <PopoverTrigger>
         <Box
+          as="a"
+          href={item.web_url}
+          target="_blank"
           display="inline-block"
           h="8"
           w="8"
@@ -31,9 +37,15 @@ export const StackItem = ({ item }: StackItemProps) => {
           key={item.iid}
         ></Box>
       </PopoverTrigger>
-      <PopoverContent w="40rem">
+      <PopoverContent w="20rem">
         <PopoverHeader pt={4} fontWeight="bold" border="0" overflow="hidden">
-          <Stack direction="row">
+          <Stack
+            direction="row"
+            as="a"
+            href={item.web_url}
+            target="_blank"
+            _hover={{ color: 'blue.500' }}
+          >
             <Box>[{item.iid}]</Box>
             <Box noOfLines={2}>{item.title}</Box>
           </Stack>
@@ -41,16 +53,24 @@ export const StackItem = ({ item }: StackItemProps) => {
         <PopoverArrow />
         <PopoverCloseButton />
         <PopoverBody>
-          <Box fontSize="xs" noOfLines={5}>
-            {item.description}
+          <Box>アサイン: {assignee.name as string}</Box>
+          <Box>
+            レビュー: {reviewer ? (reviewer.name as string) : '未アサイン'}
           </Box>
+          <Box>更新: {dayjs(item.updated_at).format('YYYY-MM-DD(ddd)')}</Box>
+          <Box>作成: {dayjs(item.created_at).format('YYYY-MM-DD(ddd)')}</Box>
         </PopoverBody>
         <PopoverFooter display="flex">
           <Spacer />
-          <ButtonGroup size="sm">
-            <Button colorScheme="green">Setup Email</Button>
-            <Button colorScheme="blue">Next</Button>
-          </ButtonGroup>
+          <Button
+            as="a"
+            target="_blank"
+            href={item.web_url}
+            size="sm"
+            colorScheme="blue"
+          >
+            GitLabで開く
+          </Button>
         </PopoverFooter>
       </PopoverContent>
     </Popover>
