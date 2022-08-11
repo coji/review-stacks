@@ -27,15 +27,13 @@ export const StackItem = ({ item, ...rest }: StackItemProps) => {
     <Popover placement="bottom" trigger="hover">
       <PopoverTrigger>
         <Box
-          as="a"
-          href={item.web_url}
-          target="_blank"
           display="inline-block"
           h="8"
           w="8"
           bgColor="gray.500"
           _hover={{ bgColor: 'gray.400' }}
           key={item.iid}
+          onMouseDown={() => window.open(item.web_url, '_blank')}
           {...rest}
         ></Box>
       </PopoverTrigger>

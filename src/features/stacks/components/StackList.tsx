@@ -23,9 +23,14 @@ export const StackList = ({ title, items }: StackListProps) => (
             </Stack>
           </GridItem>
 
-          <GridItem display="flex" alignItems="center" gap="4">
-            <Box>{item.mergerequests.length}件</Box>
-            <Box>
+          <GridItem
+            display="flex"
+            alignItems="center"
+            gap="4"
+            overflow="scroll"
+          >
+            <Box whiteSpace="nowrap">{item.mergerequests.length}件</Box>
+            <Box whiteSpace="nowrap">
               {item.mergerequests.map((mr, idx) => (
                 <StackItem
                   key={mr.id}
