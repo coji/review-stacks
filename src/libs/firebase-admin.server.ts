@@ -1,3 +1,4 @@
+import type { NextApiRequest } from 'next'
 import admin from 'firebase-admin'
 
 const initializeApp = () => {
@@ -8,6 +9,18 @@ const initializeApp = () => {
       clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL
     })
   })
+}
+
+export const getIdTokenFromRequest = async (req: NextApiRequest) => {
+  const authHeader = req.headers['authorization']
+  if (!authHeader || authHeader.split(' ')[0] !== 'Bearer') return null
+
+  const idToken = authHeader.split(' ')[1]
+  if (!idToken) return null
+  return await firebase
+    .auth()
+    .verifyIdToken(idToken)
+    .catch(() => null)
 }
 
 admin.apps.length ? admin.app() : initializeApp()

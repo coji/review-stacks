@@ -1,8 +1,10 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { Box, Heading } from '@chakra-ui/react'
+import { Stack, Box, Heading, Avatar, Grid, GridItem } from '@chakra-ui/react'
 import { useAuth } from '~/features/auth/hooks/useAuth'
 import { useTeam } from '~/features/team/hooks/useTeam'
+import { StackList } from '~/features/stacks/components/StackList'
+import dayjs from 'dayjs'
 
 const Home: NextPage = () => {
   const { currentUser } = useAuth()
@@ -20,9 +22,29 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Box p="4">
-        <Heading color="gray.600">{teamData.name}</Heading>
-      </Box>
+      <Stack p="4">
+        <Stack direction="row">
+          <Heading color="gray.600" size="sm" flex="1">
+            <Box>{teamData.name}</Box>
+          </Heading>
+          <Box fontSize="xs">
+            最終更新: {dayjs(teamData.updatedAt).format('YYYY-MM-DD HH:mm')}
+          </Box>
+        </Stack>
+
+        <Grid gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}>
+          <GridItem>
+            <StackList
+              title="作成した、またはアサインされているMR"
+              items={teamData.assignees}
+            />
+          </GridItem>
+
+          <GridItem>
+            <StackList title="レビュー中のMR一覧" items={teamData.reviewers} />
+          </GridItem>
+        </Grid>
+      </Stack>
     </>
   )
 }

@@ -87,7 +87,6 @@ export function useAuthUser<R = AppUser | null>(
 
           if (!resolved) {
             resolved = true
-            console.log('resolved', appUser)
             resolve(appUser as AppUser)
           } else {
             queryClient.setQueryData<AppUser | null>(key, appUser as AppUser)
