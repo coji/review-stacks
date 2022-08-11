@@ -7,8 +7,16 @@ import { StackList } from '~/features/stacks/components/StackList'
 import dayjs from 'dayjs'
 
 const Home: NextPage = () => {
-  const { currentUser } = useAuth()
+  const { isAuthChecking, currentUser } = useAuth()
   const { data: teamData } = useTeam(currentUser?.teamId)
+
+  if (!isAuthChecking && !currentUser) {
+    return (
+      <Box display="grid" alignItems="center" justifyItems="center">
+        サインインしてください。
+      </Box>
+    )
+  }
 
   if (!teamData) {
     return <div>loading...</div>
