@@ -2,12 +2,11 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Box, Heading } from '@chakra-ui/react'
 import { useAuth } from '~/features/auth/hooks/useAuth'
-import { useTeam, useTeamUpdator } from '~/features/team/hooks/useTeam'
+import { useTeam } from '~/features/team/hooks/useTeam'
 
 const Home: NextPage = () => {
   const { currentUser } = useAuth()
   const { data: teamData } = useTeam(currentUser?.teamId)
-  useTeamUpdator(currentUser?.teamId)
 
   if (!teamData) {
     return <div>loading...</div>

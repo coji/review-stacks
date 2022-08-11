@@ -37,12 +37,6 @@ export const fetchTeam = async (id: string) => {
 }
 
 export const useTeam = (id?: string | null) => {
-  return useQuery(['team', id], () => fetchTeam(id!), {
-    enabled: !!id
-  })
-}
-
-export const useTeamUpdator = (id?: string | null) => {
   const unsubscribe = useRef<ReturnType<typeof onSnapshot>>()
   const queryClient = useQueryClient()
 
@@ -65,4 +59,8 @@ export const useTeamUpdator = (id?: string | null) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  return useQuery(['team', id], () => fetchTeam(id!), {
+    enabled: !!id
+  })
 }
