@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { Stack, Box, Heading, Avatar, Grid, GridItem } from '@chakra-ui/react'
+import { Stack, Box, Heading, Center, Grid, GridItem } from '@chakra-ui/react'
 import { useAuth } from '~/features/auth/hooks/useAuth'
 import { useTeam } from '~/features/team/hooks/useTeam'
 import { StackList } from '~/features/stacks/components/StackList'
@@ -11,11 +11,7 @@ const Home: NextPage = () => {
   const { data: teamData } = useTeam(currentUser?.teamId)
 
   if (!isAuthChecking && !currentUser) {
-    return (
-      <Box h="full" display="grid" alignItems="center" justifyItems="center">
-        サインインしてください。
-      </Box>
-    )
+    return <Center h="full">サインインしてください。</Center>
   }
 
   if (!teamData) {
