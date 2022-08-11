@@ -12,7 +12,7 @@ const Home: NextPage = () => {
 
   if (!isAuthChecking && !currentUser) {
     return (
-      <Box display="grid" alignItems="center" justifyItems="center">
+      <Box h="full" display="grid" alignItems="center" justifyItems="center">
         サインインしてください。
       </Box>
     )
