@@ -1,5 +1,6 @@
 import {
   Box,
+  BoxProps,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -15,10 +16,10 @@ import {
 import { Types } from '@gitbeaker/node'
 import dayjs from '~/libs/dayjs'
 
-interface StackItemProps {
+interface StackItemProps extends BoxProps {
   item: Types.MergeRequestSchema
 }
-export const StackItem = ({ item }: StackItemProps) => {
+export const StackItem = ({ item, ...rest }: StackItemProps) => {
   const assignee = item.assignee ?? item.author
   const reviewer = item.reviewers?.[0]
 
@@ -35,6 +36,7 @@ export const StackItem = ({ item }: StackItemProps) => {
           bgColor="gray.500"
           _hover={{ bgColor: 'gray.400' }}
           key={item.iid}
+          {...rest}
         ></Box>
       </PopoverTrigger>
       <PopoverContent w="20rem">

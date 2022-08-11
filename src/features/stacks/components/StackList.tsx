@@ -26,8 +26,15 @@ export const StackList = ({ title, items }: StackListProps) => (
           <GridItem display="flex" alignItems="center" gap="4">
             <Box>{item.mergerequests.length}件</Box>
             <Box>
-              {item.mergerequests.map((mr) => (
-                <StackItem key={mr.id} item={mr}></StackItem>
+              {item.mergerequests.map((mr, idx) => (
+                <StackItem
+                  key={mr.id}
+                  item={mr}
+                  roundedLeft={idx === 0 ? 'md' : undefined}
+                  roundedRight={
+                    idx === item.mergerequests.length - 1 ? 'md' : undefined
+                  }
+                ></StackItem>
               ))}
             </Box>
           </GridItem>
