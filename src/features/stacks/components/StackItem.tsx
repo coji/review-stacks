@@ -31,7 +31,7 @@ export const StackItem = ({ item, ...rest }: StackItemProps) => {
           h="8"
           w="8"
           bgColor="gray.500"
-          _hover={{ bgColor: 'gray.400' }}
+          _hover={{ bgColor: 'gray.400', cursor: 'pointer' }}
           key={item.iid}
           onPointerDown={() => window.open(item.web_url, '_blank')}
           {...rest}
