@@ -1,5 +1,5 @@
 import type { Types } from '@gitbeaker/node/dist/types'
-import { GitlabUser, ReviewStackItem } from '~/interfaces/model'
+import { ReviewStackItem, UserInfo } from '~/interfaces/model'
 
 const addAssignMR = (
   assignees: Map<string, Types.MergeRequestSchema[]>,
@@ -22,37 +22,47 @@ const addReviewMR = (
 export const buildReviewStacks = (
   mergerequests: Types.MergeRequestSchema[]
 ) => {
-  const users = new Map()
+  const users: { [key: string]: UserInfo } = {}
   const assignees = new Map()
   const reviewers = new Map()
 
   for (const mr of mergerequests) {
     const assignee = mr.assignee ?? mr.author
-    users.set(String(assignee.username), {
+    users[String(assignee.username)] ||= {
       username: assignee.username,
       name: assignee.name,
-      avatar: assignee.avatar_url
-    })
+      avatar: assignee.avatar_url,
+      assigned: [],
+      reviews: []
+    } as UserInfo
     addAssignMR(assignees, String(assignee.username), mr)
 
     if (mr.reviewers) {
       for (const reviewer of mr.reviewers) {
-        users.set(reviewer.username, {
+        users[String(reviewer.username)] ||= {
           username: reviewer.username,
           name: reviewer.name,
-          avatar: reviewer.avatar_url
-        })
+          avatar: reviewer.avatar_url,
+          assigned: [],
+          reviews: []
+        } as UserInfo
         addReviewMR(reviewers, String(reviewer.username), mr)
       }
     }
   }
 
+  for (const username of Object.keys(users)) {
+    users[username].assigned = assignees.get(username)
+    users[username].reviews = reviewers.get(username)
+  }
+
   return {
+    users,
     assignees: Array.from(assignees.entries())
       .map(
         (entry) =>
           ({
-            user: users.get(entry[0]),
+            user: users[entry[0]],
             mergerequests: entry[1]
           } as ReviewStackItem)
       )
@@ -63,7 +73,7 @@ export const buildReviewStacks = (
       .map(
         (entry) =>
           ({
-            user: users.get(entry[0]),
+            user: users[entry[0]],
             mergerequests: entry[1]
           } as ReviewStackItem)
       )

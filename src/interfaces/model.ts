@@ -10,3 +10,8 @@ export interface ReviewStackItem {
   user: GitlabUser
   mergerequests: Types.MergeRequestSchema[]
 }
+
+export interface UserInfo extends GitlabUser {
+  assigned: Types.MergeRequestSchema[]
+  reviews: Types.MergeRequestSchema[]
+}

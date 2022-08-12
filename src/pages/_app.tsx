@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
+import { RecoilRoot } from 'recoil'
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -29,12 +30,14 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     ((page) => <AppDefaultLayout>{page}</AppDefaultLayout>)
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ChakraProvider theme={theme}>
-        {getLayout(<Component {...pageProps} />)}
-      </ChakraProvider>
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider theme={theme}>
+          {getLayout(<Component {...pageProps} />)}
+        </ChakraProvider>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </RecoilRoot>
   )
 }
 

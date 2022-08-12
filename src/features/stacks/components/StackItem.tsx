@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react'
 import { Types } from '@gitbeaker/node'
 import dayjs from '~/libs/dayjs'
+import { useUserSelection } from '../hooks/useUserSelection'
 
 interface StackItemProps extends BoxProps {
   item: Types.MergeRequestSchema
@@ -22,6 +23,8 @@ interface StackItemProps extends BoxProps {
 export const StackItem = ({ item, ...rest }: StackItemProps) => {
   const assignee = item.assignee ?? item.author
   const reviewer = item.reviewers?.[0]
+  const { selectedUser, setSelectedUser } = useUserSelection()
+  const isActive = assignee.username === selectedUser
 
   return (
     <Popover placement="bottom" trigger="hover">
@@ -30,7 +33,7 @@ export const StackItem = ({ item, ...rest }: StackItemProps) => {
           display="inline-block"
           h="8"
           w="8"
-          bgColor="gray.500"
+          bgColor={isActive ? 'blue.200' : 'gray.500'}
           _hover={{ bgColor: 'gray.400', cursor: 'pointer' }}
           key={item.iid}
           onPointerDown={() => window.open(item.web_url, '_blank')}

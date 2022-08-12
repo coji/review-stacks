@@ -40,12 +40,17 @@ const Home: NextPage = () => {
           <GridItem>
             <StackList
               title="作成した、またはアサインされているMR"
+              users={teamData.users}
               items={teamData.assignees}
             />
           </GridItem>
 
           <GridItem>
-            <StackList title="レビュー中のMR一覧" items={teamData.reviewers} />
+            <StackList
+              title="レビュー中のMR一覧"
+              users={teamData.users}
+              items={teamData.reviewers}
+            />
           </GridItem>
         </Grid>
       </Stack>
