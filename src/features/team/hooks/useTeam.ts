@@ -69,7 +69,7 @@ export const useTeam = (id?: string | null) => {
   return useQuery(
     ['team', id],
     async () => {
-      await update()
+      update()
       return await fetchTeam(id!)
     },
     {
