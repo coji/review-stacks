@@ -64,7 +64,7 @@ export const useTeam = (id?: string | null) => {
       if (unsubscribe.current) unsubscribe.current()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [id])
 
   return useQuery(
     ['team', id],
