@@ -32,7 +32,7 @@ export const StackList = ({ title, items, users }: StackListProps) => {
                   borderColor={isActive ? 'blue.500' : 'transparent'}
                   borderWidth="1px"
                   rounded="md"
-                  _hover={{ cursor: 'default' }}
+                  _hover={{ cursor: 'default', color: 'blue.500' }}
                 >
                   <Avatar size="sm" src={item.user.avatar} />
                   <Box w="9rem" whiteSpace="nowrap">
