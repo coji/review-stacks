@@ -12,7 +12,7 @@ export const createFetcher = ({
   const api = new Gitlab({ token: privateToken })
 
   const openedMergerequests = async () =>
-    await api.MergeRequests.all({ projectId, state: 'opened' })
+    await api.MergeRequests.all({ projectId, state: 'opened', sort: 'asc' })
 
   return {
     openedMergerequests
