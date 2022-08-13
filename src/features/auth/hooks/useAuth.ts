@@ -17,7 +17,10 @@ import { auth, firestore } from '~/libs/firebase'
 import { getDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore'
 import { match } from 'ts-pattern'
 
-interface AppUser extends User {
+// displayName
+// email
+// photoURL
+interface AppUser extends Pick<User, 'displayName' | 'email' | 'photoURL'> {
   teamId: string | null
 }
 
@@ -47,23 +50,15 @@ const upsertUser = async (user: User, teamId: string | null) => {
   await setDoc(docRef, params, { merge: true })
 }
 
-export function useAuthUser<R = AppUser | null>(
-  key: QueryKey,
-  auth: Auth,
-  useQueryOptions?: Omit<
-    UseQueryOptions<AppUser | null, AuthError, R>,
-    'queryFn'
-  >
+function useAuthUser<R = AppUser | null>(
+  auth: Auth
 ): UseQueryResult<R, AuthError> {
   const queryClient = useQueryClient()
 
-  return useQuery({
-    ...useQueryOptions,
-    queryKey: key,
-    staleTime: Infinity,
-    async queryFn() {
-      let resolved = false
-
+  return useQuery(
+    ['user'],
+    async () => {
+      let resolved = false // 1回目だけ resolve させる
       return new Promise<AppUser | null>((resolve, reject) => {
         auth.onAuthStateChanged(async (user) => {
           let teamId: string | null = null
@@ -83,22 +78,32 @@ export function useAuthUser<R = AppUser | null>(
               }
             }
           }
-          const appUser = user ? { ...user, teamId } : null
+          const appUser: AppUser | null = user && {
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            teamId
+          }
 
           if (!resolved) {
+            // 1回目だけ resolve させる
             resolved = true
-            resolve(appUser as AppUser)
+            resolve(appUser)
           } else {
-            queryClient.setQueryData<AppUser | null>(key, appUser as AppUser)
+            // 複数コンポーネントから利用されるケースなど2回目以降(ログアウト時等)はデータだけ更新。
+            queryClient.setQueryData<AppUser | null>(['user'], appUser)
           }
         }, reject)
       })
+    },
+    {
+      staleTime: Infinity
     }
-  })
+  )
 }
 
 export const useAuth = () => {
-  const currentUser = useAuthUser(['user'], auth)
+  const currentUser = useAuthUser(auth)
   return {
     currentUser: currentUser.data,
     isAuthChecking: currentUser.isLoading

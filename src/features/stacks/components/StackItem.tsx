@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import {
   Box,
   BoxProps,
@@ -20,7 +21,7 @@ import { useUserSelection } from '../hooks/useUserSelection'
 interface StackItemProps extends BoxProps {
   item: Types.MergeRequestSchema
 }
-export const StackItem = ({ item, ...rest }: StackItemProps) => {
+export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
   const assignee = item.assignee ?? item.author
   const reviewer = item.reviewers?.[0]
   const { selectedUser, setSelectedUser } = useUserSelection()
@@ -33,8 +34,8 @@ export const StackItem = ({ item, ...rest }: StackItemProps) => {
           display="inline-block"
           h="8"
           w="8"
-          bgColor={isActive ? 'blue.200' : 'gray.500'}
-          _hover={{ bgColor: 'gray.400', cursor: 'pointer' }}
+          bgColor={isActive ? 'blue.500' : 'gray.200'}
+          _hover={{ bgColor: 'gray.500', cursor: 'pointer' }}
           key={item.iid}
           onPointerDown={() => window.open(item.web_url, '_blank')}
           {...rest}
@@ -82,4 +83,5 @@ export const StackItem = ({ item, ...rest }: StackItemProps) => {
       </PopoverContent>
     </Popover>
   )
-}
+})
+StackItem.displayName = 'StackItem'

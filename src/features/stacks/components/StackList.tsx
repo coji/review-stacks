@@ -29,7 +29,8 @@ export const StackList = ({ title, items, users }: StackListProps) => {
                   align="center"
                   onMouseEnter={() => setSelectedUser(item.user.username)}
                   onMouseLeave={() => setSelectedUser(null)}
-                  bgColor={isActive ? 'blue.100' : undefined}
+                  borderColor={isActive ? 'blue.500' : 'transparent'}
+                  borderWidth="1px"
                   rounded="md"
                   _hover={{ cursor: 'default' }}
                 >

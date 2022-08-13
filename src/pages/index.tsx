@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Stack, Box, Heading, Center, Grid, GridItem } from '@chakra-ui/react'
 import { useAuth } from '~/features/auth/hooks/useAuth'
+import { AuthSignInButton } from '~/features/auth/components/AuthSignInButton'
 import { useTeam } from '~/features/team/hooks/useTeam'
 import { StackList } from '~/features/stacks/components/StackList'
 import dayjs from 'dayjs'
@@ -11,11 +12,19 @@ const Home: NextPage = () => {
   const { data: teamData } = useTeam(currentUser?.teamId)
 
   if (!isAuthChecking && !currentUser) {
-    return <Center h="full">サインインしてください。</Center>
+    return (
+      <Center h="full" color="gray.500">
+        <AuthSignInButton />
+      </Center>
+    )
   }
 
   if (!teamData) {
-    return <Center h="full">loading...</Center>
+    return (
+      <Center h="full" color="gray.500">
+        Loading...
+      </Center>
+    )
   }
 
   return (

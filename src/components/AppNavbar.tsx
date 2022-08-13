@@ -14,11 +14,10 @@ import {
   Box,
   Text,
   Divider,
-  Avatar,
+  Avatar
 } from '@chakra-ui/react'
 import { useAuth } from '~/features/auth/hooks/useAuth'
 import { useAuthAction } from '~/features/auth/hooks/useAuthAction'
-import { AuthSignInButton } from '~/features/auth/components/AuthSignInButton'
 
 export const AppNavbar = () => {
   const { currentUser, isAuthChecking } = useAuth()
@@ -81,7 +80,7 @@ export const AppNavbar = () => {
       ) : isAuthChecking ? (
         <CircularProgress isIndeterminate size="32px" />
       ) : (
-        <AuthSignInButton size="sm" />
+        <></>
       )}
     </Flex>
   )
