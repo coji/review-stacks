@@ -1,20 +1,19 @@
-import { useAuthUser } from './useAuth'
+import { useAuth } from './useAuth'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { auth } from '~/libs/firebase'
 
 export const useRequireLogin = () => {
-  const currentUser = useAuthUser(['user'], auth)
+  const { isAuthChecking, currentUser } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
-    if (!currentUser.isLoading && !currentUser.data) {
+    if (!isAuthChecking && !currentUser) {
       router.push(`/signin?r=${router.asPath}`)
     }
-  }, [router, currentUser.isLoading, currentUser.data])
+  }, [router, isAuthChecking, currentUser])
 
   return {
-    currentUser: currentUser.data,
-    isAuthChecking: currentUser.isLoading
+    currentUser,
+    isAuthChecking
   }
 }
