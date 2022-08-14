@@ -49,16 +49,16 @@ const Home: NextPage = () => {
           <GridItem>
             <StackList
               title="作成した、またはアサインされているMR"
-              users={teamData.users}
               items={teamData.assignees}
+              type="assignee"
             />
           </GridItem>
 
           <GridItem>
             <StackList
               title="レビュー中のMR一覧"
-              users={teamData.users}
               items={teamData.reviewers}
+              type="reviewer"
             />
           </GridItem>
         </Grid>

@@ -6,10 +6,10 @@ import { useUserSelection } from '../hooks/useUserSelection'
 interface StackListProps {
   title: string
   items: ReviewStackItem[]
-  users: { [username: string]: UserInfo }
+  type: 'assignee' | 'reviewer'
 }
 
-export const StackList = ({ title, items, users }: StackListProps) => {
+export const StackList = ({ title, items, type }: StackListProps) => {
   const { selectedUser, setSelectedUser } = useUserSelection()
 
   return (
@@ -20,19 +20,27 @@ export const StackList = ({ title, items, users }: StackListProps) => {
 
       <Grid gridTemplateColumns="auto auto 1fr" gap="4">
         {items.map((item) => {
-          const isActive = item.user.username === selectedUser
+          const isActive =
+            selectedUser?.type === 'assignee' &&
+            item.user.username === selectedUser?.username
           return (
             <Fragment key={item.user.username}>
               <GridItem>
                 <Stack
                   direction="row"
                   align="center"
-                  onMouseEnter={() => setSelectedUser(item.user.username)}
+                  onMouseEnter={() =>
+                    setSelectedUser({ username: item.user.username, type })
+                  }
                   onMouseLeave={() => setSelectedUser(null)}
-                  borderColor={isActive ? 'blue.500' : 'transparent'}
+                  borderColor="transparent"
                   borderWidth="1px"
                   rounded="md"
-                  _hover={{ cursor: 'default', color: 'blue.500' }}
+                  _hover={{
+                    cursor: 'default',
+                    color: 'blue.500',
+                    borderColor: 'blue.500'
+                  }}
                 >
                   <Avatar size="sm" src={item.user.avatar} />
                   <Box w="9rem" whiteSpace="nowrap">

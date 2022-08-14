@@ -45,11 +45,31 @@ export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
       () => 'blue.300'
     )
     .when(
-      () => assignee.username === selectedUser && !!reviewer, // 選択中の assignee でレビュアーアサイン済み
+      () =>
+        selectedUser?.type == 'assignee' &&
+        assignee.username === selectedUser?.username &&
+        !!reviewer, // 選択中の assignee でレビュアーアサイン済み
       () => 'blue.500'
     )
     .when(
-      () => assignee.username === selectedUser, // 選択中の assignee でレビュアー未アサイン
+      () =>
+        selectedUser?.type == 'assignee' &&
+        assignee.username === selectedUser?.username, // 選択中の assignee でレビュアー未アサイン
+      () => 'blue.300'
+    )
+    .when(
+      () =>
+        selectedUser?.type == 'reviewer' &&
+        !!reviewer &&
+        reviewer.username === selectedUser?.username &&
+        !!reviewer, // 選択中の assignee でレビュアーアサイン済み
+      () => 'blue.500'
+    )
+    .when(
+      () =>
+        selectedUser?.type == 'reviewer' &&
+        !!reviewer &&
+        reviewer.username === selectedUser?.username, // 選択中の assignee でレビュアー未アサイン
       () => 'blue.300'
     )
     .otherwise(() => 'gray.300') // それ以外

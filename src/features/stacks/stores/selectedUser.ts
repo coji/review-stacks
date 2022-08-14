@@ -1,6 +1,10 @@
 import { atom } from 'recoil'
 
-export const selectedUserState = atom<string | null>({
+interface SelectedUser {
+  username: string
+  type: 'assignee' | 'reviewer'
+}
+export const selectedUserState = atom<SelectedUser | null>({
   key: 'selected-user',
   default: null
 })
