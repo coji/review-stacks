@@ -37,22 +37,22 @@ export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
 
   const color = match(item)
     .when(
-      (item) => selectedItem === item.iid && reviewer,
+      (item) => selectedItem === item.iid && !!reviewer, // 選択中のMRでレビュアーアサイン済み
       () => 'blue.500'
     )
     .when(
-      (item) => selectedItem === item.iid,
+      (item) => selectedItem === item.iid, // 選択中のMRでレビュアー未アサイン
       () => 'blue.300'
     )
     .when(
-      () => assignee.username === selectedUser && !!reviewer, // レビューアアサイン済み
+      () => assignee.username === selectedUser && !!reviewer, // 選択中の assignee でレビュアーアサイン済み
       () => 'blue.500'
     )
     .when(
-      () => assignee.username === selectedUser, // レビュアー未アサイン
+      () => assignee.username === selectedUser, // 選択中の assignee でレビュアー未アサイン
       () => 'blue.300'
     )
-    .otherwise(() => 'gray.300')
+    .otherwise(() => 'gray.300') // それ以外
 
   return (
     <Popover placement="bottom" trigger="hover">
