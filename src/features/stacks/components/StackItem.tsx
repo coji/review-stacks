@@ -106,7 +106,7 @@ export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
                   </Td>
                 </Tr>
                 <Tr>
-                  <Th>更新</Th>
+                  <Th>作成</Th>
                   <Td>
                     {dayjs(item.created_at).format('YYYY-MM-DD(ddd) HH:mm')}
                   </Td>
