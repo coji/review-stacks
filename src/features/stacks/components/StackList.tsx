@@ -21,7 +21,7 @@ export const StackList = ({ title, items, type }: StackListProps) => {
       <Grid gridTemplateColumns="auto auto 1fr" gap="4">
         {items.map((item) => {
           const isActive =
-            selectedUser?.type === 'assignee' &&
+            type === selectedUser?.type &&
             item.user.username === selectedUser?.username
           return (
             <Fragment key={item.user.username}>
@@ -33,13 +33,12 @@ export const StackList = ({ title, items, type }: StackListProps) => {
                     setSelectedUser({ username: item.user.username, type })
                   }
                   onMouseLeave={() => setSelectedUser(null)}
-                  borderColor="transparent"
+                  color={isActive ? 'blue.500' : 'inherit'}
+                  borderColor={isActive ? 'blue.500' : 'transparent'}
                   borderWidth="1px"
                   rounded="md"
                   _hover={{
-                    cursor: 'default',
-                    color: 'blue.500',
-                    borderColor: 'blue.500'
+                    cursor: 'default'
                   }}
                 >
                   <Avatar size="sm" src={item.user.avatar} />
