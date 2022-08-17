@@ -37,6 +37,15 @@ export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
 
   const color = match(item)
     .when(
+      (item) => item.state === 'merged' && selectedItem === item.iid,
+      () => 'gray.500'
+    )
+    .when(
+      // マージ済みのもの
+      (item) => item.state === 'merged',
+      () => 'gray.400'
+    )
+    .when(
       (item) => selectedItem === item.iid && !!reviewer, // 選択中のMRでレビュアーアサイン済み
       () => 'blue.500'
     )
