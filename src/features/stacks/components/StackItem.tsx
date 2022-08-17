@@ -132,6 +132,14 @@ export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
                     {reviewer ? String(reviewer.name) : '未アサイン'}
                   </Td>
                 </Tr>
+                {item.state === 'merged' && (
+                  <Tr>
+                    <Th>マージ</Th>
+                    <Td>
+                      {dayjs(item.merged_at).format('YYYY-MM-DD(ddd) HH:mm')}
+                    </Td>
+                  </Tr>
+                )}
                 <Tr>
                   <Th>更新</Th>
                   <Td>
