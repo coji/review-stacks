@@ -40,8 +40,14 @@ const Home: NextPage = () => {
           <Heading color="gray.600" size="sm" flex="1">
             <Box>{teamData.name}</Box>
           </Heading>
-          <Box fontSize="xs">
-            最終更新: {dayjs(teamData.updatedAt).format('YYYY-MM-DD HH:mm')}
+          <Box fontSize="xs" color="gray.500" textAlign="right">
+            <Box>
+              最終更新: {dayjs(teamData.updatedAt).format('YYYY-MM-DD HH:mm')}
+            </Box>
+            <Box fontStyle="italic">
+              * opened 状態の MR と、過去１週間以内に更新された closed 状態の MR
+              を表示しています
+            </Box>
           </Box>
         </Stack>
 

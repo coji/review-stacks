@@ -61,23 +61,16 @@ export const StackList = ({ title, items, type }: StackListProps) => {
                 overflow="scroll"
               >
                 <Box whiteSpace="nowrap">
-                  {item.mergerequests
-                    .filter(
-                      (mr) =>
-                        type === 'assignee' ? mr.state === 'opened' : true // assignee で出すのは opened のものだけ。reviewer には全部出す
-                    )
-                    .map((mr, idx) => (
-                      <StackItem
-                        key={mr.id}
-                        item={mr}
-                        roundedLeft={idx === 0 ? 'md' : undefined}
-                        roundedRight={
-                          idx === item.mergerequests.length - 1
-                            ? 'md'
-                            : undefined
-                        }
-                      ></StackItem>
-                    ))}
+                  {item.mergerequests.map((mr, idx) => (
+                    <StackItem
+                      key={mr.id}
+                      item={mr}
+                      roundedLeft={idx === 0 ? 'md' : undefined}
+                      roundedRight={
+                        idx === item.mergerequests.length - 1 ? 'md' : undefined
+                      }
+                    ></StackItem>
+                  ))}
                 </Box>
               </GridItem>
             </Fragment>

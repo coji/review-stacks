@@ -110,6 +110,10 @@ export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
             <Table size="sm" variant="simple">
               <Tbody>
                 <Tr>
+                  <Th>state</Th>
+                  <Td>{String(item.state)}</Td>
+                </Tr>
+                <Tr>
                   <Th>アサイン</Th>
                   <Td>{String(assignee.name)}</Td>
                 </Tr>
