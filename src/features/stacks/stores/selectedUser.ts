@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
 
-interface SelectedUser {
+export interface SelectedUser {
   username: string
   type: 'assignee' | 'reviewer'
 }
