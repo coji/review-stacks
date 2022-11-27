@@ -1,5 +1,5 @@
 import { Gitlab } from '@gitbeaker/node'
-import dayjs from 'dayjs'
+import dayjs from '~/libs/dayjs'
 
 interface createFetcherProps {
   projectId: string

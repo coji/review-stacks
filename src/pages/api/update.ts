@@ -4,7 +4,7 @@ import { createFetcher } from '~/features/gitlab/services/fetcher.server'
 import type { Types } from '@gitbeaker/node'
 import { getIdTokenFromRequest } from '~/libs/firebase-admin.server'
 import { getTeam, updateTeam } from '~/features/team/libs/team.server'
-import dayjs from 'dayjs'
+import dayjs from '~/libs/dayjs'
 
 export default async function handler(
   req: NextApiRequest,

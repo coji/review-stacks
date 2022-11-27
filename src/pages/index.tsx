@@ -5,7 +5,7 @@ import { useAuth } from '~/features/auth/hooks/useAuth'
 import { AuthSignInButton } from '~/features/auth/components/AuthSignInButton'
 import { useTeam } from '~/features/team/hooks/useTeam'
 import { StackList } from '~/features/stacks/components/StackList'
-import dayjs from 'dayjs'
+import dayjs from '~/libs/dayjs'
 
 const Home: NextPage = () => {
   const { isAuthChecking, currentUser } = useAuth()

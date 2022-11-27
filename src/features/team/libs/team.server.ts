@@ -1,7 +1,7 @@
 import { Team } from '../interfaces/team'
 import { firestore } from '~/libs/firebase-admin.server'
 import type { Types } from '@gitbeaker/node/dist/types'
-import dayjs from 'dayjs'
+import dayjs from '~/libs/dayjs'
 
 // team を1件取得
 export const getTeam = async (teamId: string) => {
