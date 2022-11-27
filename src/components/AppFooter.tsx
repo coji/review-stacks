@@ -1,4 +1,3 @@
-import NextLink from 'next/link'
 import { Box, Text, Container, Stack, Flex, Link, Icon } from '@chakra-ui/react'
 
 export const AppFooter = () => (

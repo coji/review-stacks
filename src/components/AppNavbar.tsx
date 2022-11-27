@@ -5,7 +5,6 @@ import {
   Heading,
   Spacer,
   CircularProgress,
-  Button,
   Menu,
   MenuButton,
   MenuList,
@@ -33,17 +32,15 @@ export const AppNavbar = () => {
       bgColor="gray.50"
       boxShadow="sm"
     >
-      <NextLink href="/" passHref>
-        <Link _hover={{ textDecoration: 'none' }}>
-          <Heading
-            fontWeight="extrabold"
-            bgGradient="linear(to-l, #2879CA, #00FF80)"
-            bgClip="text"
-          >
-            Review Stacks
-          </Heading>
-        </Link>
-      </NextLink>
+      <Link as={NextLink} href="/" _hover={{ textDecoration: 'none' }}>
+        <Heading
+          fontWeight="extrabold"
+          bgGradient="linear(to-l, #2879CA, #00FF80)"
+          bgClip="text"
+        >
+          Review Stacks
+        </Heading>
+      </Link>
 
       <Spacer />
 
