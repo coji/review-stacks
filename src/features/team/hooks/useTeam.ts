@@ -38,7 +38,7 @@ export const fetchTeam = async (id: string) => {
   return snapshot.data()
 }
 
-export const useTeam = (id?: string | null) => {
+export const useTeam = (id: string | null, isShowClosed: boolean) => {
   const { update } = useUpdator(id)
   const unsubscribe = useRef<ReturnType<typeof onSnapshot>>()
   const queryClient = useQueryClient()
@@ -55,7 +55,14 @@ export const useTeam = (id?: string | null) => {
         queryClient.setQueryData(
           ['team', id],
           team
-            ? { ...team, ...buildReviewStacks(team.mergerequests) }
+            ? {
+                ...team,
+                ...buildReviewStacks(
+                  team.mergerequests.filter((mr) =>
+                    isShowClosed ? true : mr.state !== 'merged'
+                  )
+                )
+              }
             : undefined
         )
       }
@@ -75,7 +82,15 @@ export const useTeam = (id?: string | null) => {
     {
       enabled: !!id,
       select: (team) => {
-        if (team) return { ...team, ...buildReviewStacks(team.mergerequests) }
+        if (team)
+          return {
+            ...team,
+            ...buildReviewStacks(
+              team.mergerequests.filter((mr) =>
+                isShowClosed ? true : mr.state !== 'merged'
+              )
+            )
+          }
       }
     }
   )

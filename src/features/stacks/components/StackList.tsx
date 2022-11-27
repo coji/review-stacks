@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { Box, Grid, GridItem, Stack, Center, Avatar } from '@chakra-ui/react'
 import { StackItem } from './StackItem'
-import { ReviewStackItem, UserInfo } from '~/interfaces/model'
+import { ReviewStackItem } from '~/interfaces/model'
 import { useUserSelection } from '../hooks/useUserSelection'
 interface StackListProps {
   title: string

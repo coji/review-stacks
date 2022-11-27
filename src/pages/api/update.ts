@@ -27,7 +27,6 @@ export default async function handler(
 
   // 最終更新から5分以上経過していたら更新かける
   if (dayjs().isAfter(dayjs(team.updatedAt).add(5, 'minute'))) {
-    console.log('update')
     // update
     const fetcher = createFetcher({
       projectId: team.projectId,
