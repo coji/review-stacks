@@ -58,7 +58,7 @@ export const StackList = ({ title, items, type }: StackListProps) => {
                 display="flex"
                 alignItems="center"
                 gap="4"
-                overflow="scroll"
+                overflow="auto"
               >
                 <Box whiteSpace="nowrap">
                   {item.mergerequests.map((mr, idx) => (
