@@ -43,7 +43,7 @@ export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
   })
 
   return (
-    <Popover placement="bottom" trigger="hover">
+    <Popover placement="bottom" trigger="hover" isLazy={true}>
       <PopoverTrigger>
         <Box
           display="inline-block"
