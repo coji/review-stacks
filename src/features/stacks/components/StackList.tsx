@@ -19,6 +19,7 @@ import {
 import { StackItem } from './StackItem'
 import { ReviewStackItem } from '~/interfaces/model'
 import { useUserSelection } from '../hooks/useUserSelection'
+import { useItemSelection } from '../hooks/useItemSelection'
 interface StackListProps {
   title: string
   items: ReviewStackItem[]
@@ -27,6 +28,7 @@ interface StackListProps {
 
 export const StackList = ({ title, items, type }: StackListProps) => {
   const { selectedUser, setSelectedUser } = useUserSelection()
+  const { selectedItem, setSelectedItem } = useItemSelection()
 
   return (
     <>
@@ -76,7 +78,15 @@ export const StackList = ({ title, items, type }: StackListProps) => {
                     <PopoverBody>
                       <Stack>
                         {item.mergerequests.map((mr, idx) => (
-                          <Stack direction="row" key={mr.id}>
+                          <Stack
+                            direction="row"
+                            key={mr.id}
+                            onPointerDown={() =>
+                              window.open(mr.web_url, '_blank')
+                            }
+                            onMouseEnter={() => setSelectedItem(mr.iid)}
+                            onMouseLeave={() => setSelectedItem(null)}
+                          >
                             <Box noOfLines={1}>
                               {idx + 1}.{' '}
                               <Link
