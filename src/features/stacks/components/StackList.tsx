@@ -13,7 +13,8 @@ import {
   PopoverArrow,
   PopoverCloseButton,
   PopoverBody,
-  PopoverFooter
+  PopoverFooter,
+  Link
 } from '@chakra-ui/react'
 import { StackItem } from './StackItem'
 import { ReviewStackItem } from '~/interfaces/model'
@@ -77,7 +78,15 @@ export const StackList = ({ title, items, type }: StackListProps) => {
                         {item.mergerequests.map((mr, idx) => (
                           <Stack direction="row" key={mr.id}>
                             <Box noOfLines={1}>
-                              {idx + 1}. {mr.title}
+                              {idx + 1}.{' '}
+                              <Link
+                                target="_blank"
+                                href={mr.web_url}
+                                textDecoration={'underline'}
+                                color={'blue.500'}
+                              >
+                                {mr.title}
+                              </Link>
                             </Box>
                           </Stack>
                         ))}
