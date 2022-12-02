@@ -1,5 +1,20 @@
 import { Fragment } from 'react'
-import { Box, Grid, GridItem, Stack, Center, Avatar } from '@chakra-ui/react'
+import {
+  Box,
+  Grid,
+  GridItem,
+  Stack,
+  Center,
+  Avatar,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverBody,
+  PopoverFooter
+} from '@chakra-ui/react'
 import { StackItem } from './StackItem'
 import { ReviewStackItem } from '~/interfaces/model'
 import { useUserSelection } from '../hooks/useUserSelection'
@@ -26,26 +41,51 @@ export const StackList = ({ title, items, type }: StackListProps) => {
           return (
             <Fragment key={item.user.username}>
               <GridItem>
-                <Stack
-                  direction="row"
-                  align="center"
-                  onMouseEnter={() =>
-                    setSelectedUser({ username: item.user.username, type })
-                  }
-                  onMouseLeave={() => setSelectedUser(null)}
-                  color={isActive ? 'blue.500' : 'inherit'}
-                  borderColor={isActive ? 'blue.500' : 'transparent'}
-                  borderWidth="1px"
-                  rounded="md"
-                  _hover={{
-                    cursor: 'default'
-                  }}
-                >
-                  <Avatar size="sm" src={item.user.avatar} />
-                  <Box w="9rem" whiteSpace="nowrap">
-                    {item.user.name}
-                  </Box>
-                </Stack>
+                <Popover placement="bottom" trigger="hover" isLazy={true}>
+                  <PopoverTrigger>
+                    <Stack
+                      direction="row"
+                      align="center"
+                      onMouseEnter={() =>
+                        setSelectedUser({ username: item.user.username, type })
+                      }
+                      onMouseLeave={() => setSelectedUser(null)}
+                      color={isActive ? 'blue.500' : 'inherit'}
+                      borderColor={isActive ? 'blue.500' : 'transparent'}
+                      borderWidth="1px"
+                      rounded="md"
+                      _hover={{
+                        cursor: 'default'
+                      }}
+                    >
+                      <Avatar size="sm" src={item.user.avatar} />
+                      <Box w="9rem" whiteSpace="nowrap">
+                        {item.user.name}
+                      </Box>
+                    </Stack>
+                  </PopoverTrigger>
+                  <PopoverContent w="30rem">
+                    <PopoverHeader
+                      pt={4}
+                      fontWeight="bold"
+                      border="0"
+                    ></PopoverHeader>
+                    <PopoverArrow />
+                    <PopoverCloseButton />
+                    <PopoverBody>
+                      <Stack>
+                        {item.mergerequests.map((mr, idx) => (
+                          <Stack direction="row" key={mr.id}>
+                            <Box noOfLines={1}>
+                              {idx + 1}. {mr.title}
+                            </Box>
+                          </Stack>
+                        ))}
+                      </Stack>
+                    </PopoverBody>
+                    <PopoverFooter border="none" display="flex"></PopoverFooter>
+                  </PopoverContent>
+                </Popover>
               </GridItem>
 
               <GridItem>
