@@ -32,69 +32,55 @@ const converter = {
   }
 }
 
-export const fetchTeam = async (id: string) => {
+const fetchTeam = async (id: string) => {
   const snapshot = await getDoc(
     doc(firestore, `teams/${id}`).withConverter(converter)
   )
   return snapshot.data()
 }
 
+const buildTeam = (isShowMerged: boolean, team?: Team) => {
+  if (!team) {
+    return
+  }
+
+  return {
+    ...team,
+    ...buildReviewStacks(
+      team.mergerequests.filter((mr) =>
+        isShowMerged ? true : mr.state !== 'merged'
+      )
+    )
+  }
+}
+
 export const useTeam = (isShowMerged: boolean) => {
   const { currentUser } = useAuth()
-  const id = currentUser?.teamId
-  const { update } = useUpdator(id)
+  const teamId = currentUser?.teamId
+  const { update } = useUpdator(teamId)
   const unsubscribe = useRef<ReturnType<typeof onSnapshot>>()
   const queryClient = useQueryClient()
 
   useEffect(() => {
-    if (!currentUser?.teamId) {
-      return
-    }
-
-    unsubscribe.current = onSnapshot(
-      doc(firestore, `teams/${id}`).withConverter(converter),
-      (snapshot) => {
-        const team = snapshot.data()
-        queryClient.setQueryData(
-          ['team', id],
-          team
-            ? {
-                ...team,
-                ...buildReviewStacks(
-                  team.mergerequests.filter((mr) =>
-                    isShowMerged ? true : mr.state !== 'merged'
-                  )
-                )
-              }
-            : undefined
-        )
-      }
-    )
+    if (!teamId) return
+    unsubscribe.current = onSnapshot(doc(firestore, `teams/${teamId}`), () => {
+      queryClient.invalidateQueries(['team', teamId])
+    })
     return () => {
       if (unsubscribe.current) unsubscribe.current()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
+  }, [teamId])
 
   return useQuery(
-    ['team', id],
+    ['team', teamId],
     async () => {
       update()
-      return await fetchTeam(id!)
+      return await fetchTeam(teamId!)
     },
     {
-      enabled: !!id,
-      select: (team) => {
-        if (team)
-          return {
-            ...team,
-            ...buildReviewStacks(
-              team.mergerequests.filter((mr) =>
-                isShowMerged ? true : mr.state !== 'merged'
-              )
-            )
-          }
-      }
+      enabled: !!teamId,
+      select: (team) => buildTeam(isShowMerged, team)
     }
   )
 }
