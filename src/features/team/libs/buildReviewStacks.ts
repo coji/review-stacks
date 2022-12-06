@@ -20,7 +20,7 @@ const buildUserInfo = (user: Omit<Types.UserSchema, 'created_at'>) => {
   } as UserInfo
 }
 
-const buildAssigneesAndReviewrs = (
+const buildAssigneesAndReviewers = (
   users: Record<string, UserInfo>,
   assignees: Map<string, any>,
   reviewers: Map<string, any>,
@@ -33,8 +33,9 @@ const buildAssigneesAndReviewrs = (
 
   if (mr.reviewers) {
     for (const reviewer of mr.reviewers) {
-      users[String(reviewer.username)] ||= buildUserInfo(reviewer)
-      addMR(reviewers, String(reviewer.username), mr)
+      const reviewerUsername = String(reviewer.username)
+      users[reviewerUsername] ||= buildUserInfo(reviewer)
+      addMR(reviewers, reviewerUsername, mr)
     }
   }
 }
@@ -62,7 +63,7 @@ export const buildReviewStacks = (
   const reviewers = new Map<string, any>()
 
   for (const mr of mergerequests) {
-    buildAssigneesAndReviewrs(users, assignees, reviewers, mr)
+    buildAssigneesAndReviewers(users, assignees, reviewers, mr)
   }
 
   for (const username of Object.keys(users)) {
