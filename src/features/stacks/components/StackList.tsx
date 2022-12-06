@@ -31,7 +31,7 @@ export const StackList = ({ title, items, type }: StackListProps) => {
   const { selectedItem, setSelectedItem } = useItemSelection()
 
   return (
-    <>
+    <Box>
       <Box fontWeight="bold" my="4" borderBottom="2px" borderColor="gray.200">
         {title}
       </Box>
@@ -67,12 +67,9 @@ export const StackList = ({ title, items, type }: StackListProps) => {
                       </Box>
                     </Stack>
                   </PopoverTrigger>
-                  <PopoverContent w="30rem">
-                    <PopoverHeader
-                      pt={4}
-                      fontWeight="bold"
-                      border="0"
-                    ></PopoverHeader>
+
+                  <PopoverContent minW={{ base: 'full', md: '30rem' }}>
+                    <PopoverHeader pt={4} fontWeight="bold" border="0" />
                     <PopoverArrow />
                     <PopoverCloseButton />
                     <PopoverBody>
@@ -136,6 +133,6 @@ export const StackList = ({ title, items, type }: StackListProps) => {
           )
         })}
       </Grid>
-    </>
+    </Box>
   )
 }

@@ -10,6 +10,7 @@ import {
 } from 'firebase/firestore'
 import type { Team } from '../interfaces/team'
 import { firestore } from '~/libs/firebase'
+import { useAuth } from '~/features/auth/hooks/useAuth'
 import { useUpdator } from './useUpdator'
 import { buildReviewStacks } from '../libs/buildReviewStacks'
 
@@ -38,13 +39,15 @@ export const fetchTeam = async (id: string) => {
   return snapshot.data()
 }
 
-export const useTeam = (id: string | null, isShowClosed: boolean) => {
+export const useTeam = (isShowMerged: boolean) => {
+  const { currentUser } = useAuth()
+  const id = currentUser?.teamId
   const { update } = useUpdator(id)
   const unsubscribe = useRef<ReturnType<typeof onSnapshot>>()
   const queryClient = useQueryClient()
 
   useEffect(() => {
-    if (!id) {
+    if (!currentUser?.teamId) {
       return
     }
 
@@ -59,7 +62,7 @@ export const useTeam = (id: string | null, isShowClosed: boolean) => {
                 ...team,
                 ...buildReviewStacks(
                   team.mergerequests.filter((mr) =>
-                    isShowClosed ? true : mr.state !== 'merged'
+                    isShowMerged ? true : mr.state !== 'merged'
                   )
                 )
               }
@@ -87,7 +90,7 @@ export const useTeam = (id: string | null, isShowClosed: boolean) => {
             ...team,
             ...buildReviewStacks(
               team.mergerequests.filter((mr) =>
-                isShowClosed ? true : mr.state !== 'merged'
+                isShowMerged ? true : mr.state !== 'merged'
               )
             )
           }
