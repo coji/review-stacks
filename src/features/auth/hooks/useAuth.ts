@@ -17,7 +17,7 @@ interface AppUser extends Pick<User, 'displayName' | 'email' | 'photoURL'> {
   teamId: string | null
 }
 
-const teamIdInit = async (auth: Auth, user: User | null) => {
+const initTeamId = async (auth: Auth, user: User | null) => {
   let teamId: string | null = null
   if (user) {
     const credential = await getRedirectResult(auth)
@@ -67,22 +67,27 @@ const upsertUser = async (user: User, teamId: string | null) => {
 const authUser = async (auth: Auth, queryClient: QueryClient) => {
   let resolved = false // 1回目だけ resolve させる
   return new Promise<AppUser | null>((resolve, reject) => {
-    auth.onAuthStateChanged(async (user) => {
-      const teamId: string | null = await teamIdInit(auth, user)
-      const appUser: AppUser | null = user && {
-        displayName: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        teamId
-      }
-      if (!resolved) {
-        resolved = true // 1回目だけ resolve させる
-        resolve(appUser)
-      } else {
-        // 複数コンポーネントから利用されるケースなど2回目以降(ログアウト時等)はデータだけ更新。
-        queryClient.setQueryData<AppUser | null>(['user'], appUser)
-      }
-    }, reject)
+    auth.onAuthStateChanged((user) => {
+      initTeamId(auth, user)
+        .then((teamId) => {
+          const appUser: AppUser | null = user && {
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            teamId
+          }
+          if (!resolved) {
+            resolved = true // 1回目だけ resolve させる
+            resolve(appUser)
+          } else {
+            // 複数コンポーネントから利用されるケースなど2回目以降(ログアウト時等)はデータだけ更新。
+            queryClient.setQueryData<AppUser | null>(['user'], appUser)
+          }
+        })
+        .catch(() => {
+          reject()
+        })
+    })
   })
 }
 

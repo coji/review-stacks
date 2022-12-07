@@ -32,10 +32,10 @@ export default async function handler(
       projectId: team.projectId,
       privateToken: team.privateToken
     })
-    mergerequests = await (
-      await fetcher.closedInWeekMergerequests()
-    ).concat(await fetcher.openedMergerequests())
-    updateTeam(team.id, mergerequests)
+    mergerequests = (await fetcher.closedInWeekMergerequests()).concat(
+      await fetcher.openedMergerequests()
+    )
+    await updateTeam(team.id, mergerequests)
   }
 
   res.status(200).json(mergerequests)

@@ -21,7 +21,7 @@ export const updateTeam = async (
   mergerequests: Types.MergeRequestSchema[]
 ) => {
   const docRef = firestore.doc(`/teams/${teamId}`)
-  docRef.set(
+  await docRef.set(
     { mergerequests, updatedAt: dayjs().toISOString() },
     { merge: true }
   )

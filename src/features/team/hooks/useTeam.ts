@@ -26,7 +26,7 @@ const converter = {
   ): Team {
     const data = snapshot.data(options)
     return {
-      id: data.id,
+      id: data.id as string,
       ...data
     } as Team
   }
@@ -64,7 +64,7 @@ export const useTeam = (isShowMerged: boolean) => {
   useEffect(() => {
     if (!teamId) return
     unsubscribe.current = onSnapshot(doc(firestore, `teams/${teamId}`), () => {
-      queryClient.invalidateQueries(['team', teamId])
+      void queryClient.invalidateQueries(['team', teamId])
     })
     return () => {
       if (unsubscribe.current) unsubscribe.current()
@@ -75,7 +75,7 @@ export const useTeam = (isShowMerged: boolean) => {
   return useQuery(
     ['team', teamId],
     async () => {
-      update()
+      await update()
       if (teamId) return await fetchTeam(teamId)
     },
     {

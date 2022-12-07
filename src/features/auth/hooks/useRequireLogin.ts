@@ -8,7 +8,7 @@ export const useRequireLogin = () => {
 
   useEffect(() => {
     if (!isAuthChecking && !currentUser) {
-      router.push(`/signin?r=${router.asPath}`)
+      void router.push(`/signin?r=${router.asPath}`)
     }
   }, [router, isAuthChecking, currentUser])
 
