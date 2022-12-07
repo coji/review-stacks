@@ -1,4 +1,4 @@
-import { Stack, Grid, GridItem } from '@chakra-ui/react'
+import { Stack, Grid } from '@chakra-ui/react'
 
 interface ReviewStacksBodyProps {
   children: React.ReactNode[]

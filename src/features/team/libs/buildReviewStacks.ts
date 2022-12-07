@@ -22,8 +22,8 @@ const buildUserInfo = (user: Omit<Types.UserSchema, 'created_at'>) => {
 
 const buildAssigneesAndReviewers = (
   users: Record<string, UserInfo>,
-  assignees: Map<string, any>,
-  reviewers: Map<string, any>,
+  assignees: Map<string, Types.MergeRequestSchema[]>,
+  reviewers: Map<string, Types.MergeRequestSchema[]>,
   mr: Types.MergeRequestSchema
 ) => {
   const assignee = mr.assignee ?? mr.author
@@ -42,7 +42,7 @@ const buildAssigneesAndReviewers = (
 
 const buildReviewStackItems = (
   users: { [key: string]: UserInfo },
-  assigneesOrReviewers: Map<string, any>
+  assigneesOrReviewers: Map<string, Types.MergeRequestSchema[]>
 ) => {
   return Array.from(assigneesOrReviewers.entries())
     .map(
@@ -59,8 +59,8 @@ export const buildReviewStacks = (
   mergerequests: Types.MergeRequestSchema[]
 ) => {
   const users: Record<string, UserInfo> = {}
-  const assignees = new Map<string, any>()
-  const reviewers = new Map<string, any>()
+  const assignees = new Map<string, Types.MergeRequestSchema[]>()
+  const reviewers = new Map<string, Types.MergeRequestSchema[]>()
 
   for (const mr of mergerequests) {
     buildAssigneesAndReviewers(users, assignees, reviewers, mr)

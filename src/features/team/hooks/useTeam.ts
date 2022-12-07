@@ -24,7 +24,7 @@ const converter = {
     snapshot: QueryDocumentSnapshot,
     options: SnapshotOptions
   ): Team {
-    const data = snapshot.data(options)!
+    const data = snapshot.data(options)
     return {
       id: data.id,
       ...data
@@ -76,7 +76,7 @@ export const useTeam = (isShowMerged: boolean) => {
     ['team', teamId],
     async () => {
       update()
-      return await fetchTeam(teamId!)
+      if (teamId) return await fetchTeam(teamId)
     },
     {
       enabled: !!teamId,

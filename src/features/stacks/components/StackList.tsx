@@ -28,7 +28,7 @@ interface StackListProps {
 
 export const StackList = ({ title, items, type }: StackListProps) => {
   const { selectedUser, setSelectedUser } = useUserSelection()
-  const { selectedItem, setSelectedItem } = useItemSelection()
+  const { setSelectedItem } = useItemSelection()
 
   return (
     <Box>

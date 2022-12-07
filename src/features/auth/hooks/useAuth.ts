@@ -68,7 +68,7 @@ const authUser = async (auth: Auth, queryClient: QueryClient) => {
   let resolved = false // 1回目だけ resolve させる
   return new Promise<AppUser | null>((resolve, reject) => {
     auth.onAuthStateChanged(async (user) => {
-      let teamId: string | null = await teamIdInit(auth, user)
+      const teamId: string | null = await teamIdInit(auth, user)
       const appUser: AppUser | null = user && {
         displayName: user.displayName,
         email: user.email,

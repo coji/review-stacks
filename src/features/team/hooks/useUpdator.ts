@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { auth } from '~/libs/firebase'
 import ky from 'ky'
 

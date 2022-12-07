@@ -1,4 +1,4 @@
-import { Flex, Box } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import Div100vh from 'react-div-100vh'
 import { AppNavbar } from '../components/AppNavbar'
 import { AppFooter } from '../components/AppFooter'

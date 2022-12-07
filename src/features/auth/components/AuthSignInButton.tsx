@@ -1,19 +1,8 @@
 import { useState } from 'react'
-import {
-  Button,
-  Box,
-  Popover,
-  PopoverProps,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverArrow,
-  PopoverCloseButton,
-  chakra
-} from '@chakra-ui/react'
+import { Button, chakra } from '@chakra-ui/react'
 import { useAuthAction } from '~/features/auth/hooks/useAuthAction'
 
-export const AuthSignInButton: React.FC<PopoverProps> = ({ ...props }) => {
+export const AuthSignInButton = () => {
   const { signInWithSlack } = useAuthAction()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
