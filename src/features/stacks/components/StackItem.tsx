@@ -20,13 +20,13 @@ import {
   Th,
   Td
 } from '@chakra-ui/react'
-import type { Types } from '@gitbeaker/node'
+import type { PullRequest } from '~/interfaces/model'
 import dayjs from '~/libs/dayjs'
 import { useUserSelection } from '../hooks/useUserSelection'
 import { useItemSelection } from '../hooks/useItemSelection'
 import { selectItemColor } from '../libs/selectItemColor'
 interface StackItemProps extends BoxProps {
-  item: Types.MergeRequestSchema
+  item: PullRequest
 }
 export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
   const assignee = item.assignee ?? item.author
@@ -51,9 +51,9 @@ export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
           w="8"
           bgColor={color}
           _hover={{ cursor: 'pointer' }}
-          key={item.iid}
-          onPointerDown={() => window.open(item.web_url, '_blank')}
-          onMouseEnter={() => setSelectedItem(item.iid)}
+          key={item.number}
+          onPointerDown={() => window.open(item.webUrl, '_blank')}
+          onMouseEnter={() => setSelectedItem(item.number)}
           onMouseLeave={() => setSelectedItem(null)}
           {...rest}
         ></Box>
@@ -63,11 +63,11 @@ export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
           <Stack
             direction="row"
             as="a"
-            href={item.web_url}
+            href={item.webUrl}
             target="_blank"
             _hover={{ color: 'blue.500' }}
           >
-            <Box>[{item.iid}]</Box>
+            <Box>[{item.number}]</Box>
             <Box noOfLines={1}>{item.title}</Box>
           </Stack>
         </PopoverHeader>
@@ -95,20 +95,20 @@ export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
                   <Tr>
                     <Th>マージ</Th>
                     <Td>
-                      {dayjs(item.merged_at).format('YYYY-MM-DD(ddd) HH:mm')}
+                      {dayjs(item.mergedAt).format('YYYY-MM-DD(ddd) HH:mm')}
                     </Td>
                   </Tr>
                 )}
                 <Tr>
                   <Th>更新</Th>
                   <Td>
-                    {dayjs(item.updated_at).format('YYYY-MM-DD(ddd) HH:mm')}
+                    {dayjs(item.updatedAt).format('YYYY-MM-DD(ddd) HH:mm')}
                   </Td>
                 </Tr>
                 <Tr>
                   <Th>作成</Th>
                   <Td>
-                    {dayjs(item.created_at).format('YYYY-MM-DD(ddd) HH:mm')}
+                    {dayjs(item.createdAt).format('YYYY-MM-DD(ddd) HH:mm')}
                   </Td>
                 </Tr>
               </Tbody>
@@ -120,7 +120,7 @@ export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
           <Button
             as="a"
             target="_blank"
-            href={item.web_url}
+            href={item.webUrl}
             size="sm"
             colorScheme="blue"
           >

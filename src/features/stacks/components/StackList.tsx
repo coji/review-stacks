@@ -79,16 +79,16 @@ export const StackList = ({ title, items, type }: StackListProps) => {
                             direction="row"
                             key={mr.id}
                             onPointerDown={() =>
-                              window.open(mr.web_url, '_blank')
+                              window.open(mr.webUrl, '_blank')
                             }
-                            onMouseEnter={() => setSelectedItem(mr.iid)}
+                            onMouseEnter={() => setSelectedItem(mr.number)}
                             onMouseLeave={() => setSelectedItem(null)}
                           >
                             <Box noOfLines={1}>
                               {idx + 1}.{' '}
                               <Link
                                 target="_blank"
-                                href={mr.web_url}
+                                href={mr.webUrl}
                                 textDecoration={'underline'}
                                 color={'blue.500'}
                               >

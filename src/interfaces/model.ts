@@ -1,17 +1,29 @@
-import { Types } from '@gitbeaker/node/dist/types'
-
-export interface GitlabUser {
+export interface User {
   username: string
   name: string
   avatar: string
 }
 
 export interface ReviewStackItem {
-  user: GitlabUser
-  mergerequests: Types.MergeRequestSchema[]
+  user: User
+  mergerequests: PullRequest[] // Types.MergeRequestSchema[]
 }
 
-export interface UserInfo extends GitlabUser {
-  assigned?: Types.MergeRequestSchema[]
-  reviews?: Types.MergeRequestSchema[]
+export interface PullRequest {
+  id: number
+  number: number // pull number or iid
+  assignee?: User
+  author: User
+  reviewers: User[]
+  title: string
+  webUrl: string
+  state: string
+  mergedAt: string
+  updatedAt: string
+  createdAt: string
+}
+
+export interface UserInfo extends User {
+  assigned?: PullRequest[]
+  reviews?: PullRequest[]
 }

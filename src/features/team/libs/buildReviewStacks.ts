@@ -1,20 +1,60 @@
 import type { Types } from '@gitbeaker/node/dist/types'
-import { ReviewStackItem, UserInfo } from '~/interfaces/model'
+import {
+  ReviewStackItem,
+  PullRequest,
+  UserInfo,
+  User
+} from '~/interfaces/model'
 
-const addMR = (
-  assigneesOrReviewers: Map<string, Types.MergeRequestSchema[]>,
-  username: string,
-  mr: Types.MergeRequestSchema
+const convertGitLabUserToUser = (
+  user: Omit<Types.UserSchema, 'created_at'>
 ) => {
-  const exist = assigneesOrReviewers.get(username) ?? []
-  assigneesOrReviewers.set(username, [...exist, mr])
+  return {
+    username: user.username as string,
+    name: user.name as string,
+    avatar: user.avatar_url as string
+  }
 }
 
-const buildUserInfo = (user: Omit<Types.UserSchema, 'created_at'>) => {
+const convertGitLabUserToUserOptional = (
+  user?: Omit<Types.UserSchema, 'created_at'>
+) => {
+  if (!user) return undefined
+  return convertGitLabUserToUser(user)
+}
+
+const convertGitLabMergerquestToPullRequest = (
+  mergerequest: Types.MergeRequestSchema
+): PullRequest => {
+  return {
+    id: mergerequest.id,
+    number: mergerequest.iid,
+    assignee: convertGitLabUserToUserOptional(mergerequest.assignee),
+    author: convertGitLabUserToUser(mergerequest.author),
+    reviewers: mergerequest.reviewers?.map(convertGitLabUserToUser) ?? [],
+    title: mergerequest.title,
+    webUrl: mergerequest.web_url,
+    state: mergerequest.state,
+    mergedAt: mergerequest.merged_at,
+    updatedAt: mergerequest.updated_at,
+    createdAt: mergerequest.created_at
+  }
+}
+
+const addPR = (
+  assigneesOrReviewers: Map<string, object[] /*Types.MergeRequestSchema[]*/>,
+  username: string,
+  pr: PullRequest
+) => {
+  const exist = assigneesOrReviewers.get(username) ?? []
+  assigneesOrReviewers.set(username, [...exist, pr])
+}
+
+const buildUserInfo = (user: User) => {
   return {
     username: user.username,
     name: user.name,
-    avatar: user.avatar_url,
+    avatar: user.avatar,
     assigned: [],
     reviews: []
   } as UserInfo
@@ -22,27 +62,30 @@ const buildUserInfo = (user: Omit<Types.UserSchema, 'created_at'>) => {
 
 const buildAssigneesAndReviewers = (
   users: Record<string, UserInfo>,
-  assignees: Map<string, Types.MergeRequestSchema[]>,
-  reviewers: Map<string, Types.MergeRequestSchema[]>,
+  assignees: Map<string, object[] /*Types.MergeRequestSchema[]*/>,
+  reviewers: Map<string, object[] /*Types.MergeRequestSchema[]*/>,
   mr: Types.MergeRequestSchema
 ) => {
-  const assignee = mr.assignee ?? mr.author
+  const pullrequest = convertGitLabMergerquestToPullRequest(mr)
+  const assignee = pullrequest.assignee ?? pullrequest.author
   const assigneeUsername = String(assignee.username)
   users[String(assignee.username)] ||= buildUserInfo(assignee)
-  addMR(assignees, assigneeUsername, mr)
+  addPR(assignees, assigneeUsername, pullrequest)
 
   if (mr.reviewers) {
-    for (const reviewer of mr.reviewers) {
+    for (const reviewer of mr.reviewers.map((r) =>
+      convertGitLabUserToUser(r)
+    )) {
       const reviewerUsername = String(reviewer.username)
       users[reviewerUsername] ||= buildUserInfo(reviewer)
-      addMR(reviewers, reviewerUsername, mr)
+      addPR(reviewers, reviewerUsername, pullrequest)
     }
   }
 }
 
 const buildReviewStackItems = (
   users: { [key: string]: UserInfo },
-  assigneesOrReviewers: Map<string, Types.MergeRequestSchema[]>
+  assigneesOrReviewers: Map<string, PullRequest[]>
 ) => {
   return Array.from(assigneesOrReviewers.entries())
     .map(
@@ -50,7 +93,7 @@ const buildReviewStackItems = (
         ({
           user: users[entry[0]],
           mergerequests: entry[1]
-        } as ReviewStackItem)
+        } satisfies ReviewStackItem)
     )
     .sort((a, b) => (b.mergerequests.length >= a.mergerequests.length ? 1 : -1))
 }
@@ -59,8 +102,8 @@ export const buildReviewStacks = (
   mergerequests: Types.MergeRequestSchema[]
 ) => {
   const users: Record<string, UserInfo> = {}
-  const assignees = new Map<string, Types.MergeRequestSchema[]>()
-  const reviewers = new Map<string, Types.MergeRequestSchema[]>()
+  const assignees = new Map<string, PullRequest[]>()
+  const reviewers = new Map<string, PullRequest[]>()
 
   for (const mr of mergerequests) {
     buildAssigneesAndReviewers(users, assignees, reviewers, mr)

@@ -1,11 +1,11 @@
-import { Types } from '@gitbeaker/node'
+import type { User, PullRequest } from '~/interfaces/model'
 import { match } from 'ts-pattern'
 import type { SelectedUser } from '../stores/selectedUser'
 
 interface SelectItemColorProps {
-  item: Types.MergeRequestSchema
-  assignee: Omit<Types.UserSchema, 'created_at'>
-  reviewer?: Omit<Types.UserSchema, 'created_at'>
+  item: PullRequest
+  assignee: User
+  reviewer?: User
   selectedUser: SelectedUser | null
   selectedItem: number | null
 }
@@ -19,7 +19,7 @@ export const selectItemColor = ({
 }: SelectItemColorProps) =>
   match(item)
     .when(
-      (item) => item.state === 'merged' && selectedItem === item.iid,
+      (item) => item.state === 'merged' && selectedItem === item.number,
       () => 'gray.500'
     )
     .when(
@@ -28,11 +28,11 @@ export const selectItemColor = ({
       () => 'gray.400'
     )
     .when(
-      (item) => selectedItem === item.iid && !!reviewer, // 選択中のMRでレビュアーアサイン済み
+      (item) => selectedItem === item.number && !!reviewer, // 選択中のMRでレビュアーアサイン済み
       () => 'blue.500'
     )
     .when(
-      (item) => selectedItem === item.iid, // 選択中のMRでレビュアー未アサイン
+      (item) => selectedItem === item.number, // 選択中のMRでレビュアー未アサイン
       () => 'blue.300'
     )
     .when(
