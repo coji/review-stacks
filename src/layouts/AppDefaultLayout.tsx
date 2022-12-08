@@ -7,9 +7,7 @@ interface AppDefaultLayoutProps {
   children: React.ReactNode
 }
 
-export const AppDefaultLayout: React.FC<AppDefaultLayoutProps> = ({
-  children
-}) => {
+export const AppDefaultLayout = ({ children }: AppDefaultLayoutProps) => {
   return (
     <Div100vh>
       <Box display="grid" gridTemplateRows="auto 1fr auto" minH="100vh">

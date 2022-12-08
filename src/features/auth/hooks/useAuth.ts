@@ -66,16 +66,18 @@ const upsertUser = async (user: User, teamId: string | null) => {
 
 const authUser = async (auth: Auth, queryClient: QueryClient) => {
   let resolved = false // 1回目だけ resolve させる
-  return new Promise<AppUser | null>((resolve, reject) => {
+  return new Promise<AppUser | undefined>((resolve, reject) => {
     auth.onAuthStateChanged((user) => {
       initTeamId(auth, user)
         .then((teamId) => {
-          const appUser: AppUser | null = user && {
-            displayName: user.displayName,
-            email: user.email,
-            photoURL: user.photoURL,
-            teamId
-          }
+          const appUser = user
+            ? {
+                displayName: user.displayName,
+                email: user.email,
+                photoURL: user.photoURL,
+                teamId
+              }
+            : undefined
           if (!resolved) {
             resolved = true // 1回目だけ resolve させる
             resolve(appUser)
@@ -99,7 +101,7 @@ export const useAuth = () => {
     { staleTime: Infinity }
   )
   return {
-    currentUser: data ?? null,
+    currentUser: data,
     isAuthChecking: isLoading
   }
 }
