@@ -6,7 +6,7 @@ export interface User {
 
 export interface ReviewStackItem {
   user: User
-  mergerequests: PullRequest[] // Types.MergeRequestSchema[]
+  pullrequests: PullRequest[] // Types.MergeRequestSchema[]
 }
 
 export interface PullRequest {

@@ -92,10 +92,10 @@ const buildReviewStackItems = (
       (entry) =>
         ({
           user: users[entry[0]],
-          mergerequests: entry[1]
+          pullrequests: entry[1]
         } satisfies ReviewStackItem)
     )
-    .sort((a, b) => (b.mergerequests.length >= a.mergerequests.length ? 1 : -1))
+    .sort((a, b) => (b.pullrequests.length >= a.pullrequests.length ? 1 : -1))
 }
 
 export const buildReviewStacks = (

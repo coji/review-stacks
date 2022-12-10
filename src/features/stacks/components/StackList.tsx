@@ -74,25 +74,25 @@ export const StackList = ({ title, items, type }: StackListProps) => {
                     <PopoverCloseButton />
                     <PopoverBody>
                       <Stack>
-                        {item.mergerequests.map((mr, idx) => (
+                        {item.pullrequests.map((pr, idx) => (
                           <Stack
                             direction="row"
-                            key={mr.id}
+                            key={pr.id}
                             onPointerDown={() =>
-                              window.open(mr.webUrl, '_blank')
+                              window.open(pr.webUrl, '_blank')
                             }
-                            onMouseEnter={() => setSelectedItem(mr.number)}
+                            onMouseEnter={() => setSelectedItem(pr.number)}
                             onMouseLeave={() => setSelectedItem(null)}
                           >
                             <Box noOfLines={1}>
                               {idx + 1}.{' '}
                               <Link
                                 target="_blank"
-                                href={mr.webUrl}
+                                href={pr.webUrl}
                                 textDecoration={'underline'}
                                 color={'blue.500'}
                               >
-                                {mr.title}
+                                {pr.title}
                               </Link>
                             </Box>
                           </Stack>
@@ -106,7 +106,7 @@ export const StackList = ({ title, items, type }: StackListProps) => {
 
               <GridItem>
                 <Center whiteSpace="nowrap" h="8" w="8">
-                  {item.mergerequests.length}件
+                  {item.pullrequests.length}件
                 </Center>
               </GridItem>
 
@@ -117,13 +117,13 @@ export const StackList = ({ title, items, type }: StackListProps) => {
                 overflow="auto"
               >
                 <Box whiteSpace="nowrap">
-                  {item.mergerequests.map((mr, idx) => (
+                  {item.pullrequests.map((pr, idx) => (
                     <StackItem
-                      key={mr.id}
-                      item={mr}
+                      key={pr.id}
+                      item={pr}
                       roundedLeft={idx === 0 ? 'md' : undefined}
                       roundedRight={
-                        idx === item.mergerequests.length - 1 ? 'md' : undefined
+                        idx === item.pullrequests.length - 1 ? 'md' : undefined
                       }
                     ></StackItem>
                   ))}
