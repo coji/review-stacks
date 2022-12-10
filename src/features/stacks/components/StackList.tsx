@@ -78,9 +78,6 @@ export const StackList = ({ title, items, type }: StackListProps) => {
                           <Stack
                             direction="row"
                             key={pr.id}
-                            onPointerDown={() =>
-                              window.open(pr.webUrl, '_blank')
-                            }
                             onMouseEnter={() => setSelectedItem(pr.number)}
                             onMouseLeave={() => setSelectedItem(null)}
                           >

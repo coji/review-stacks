@@ -1,5 +1,6 @@
 import { memo } from 'react'
 import {
+  Link,
   Box,
   BoxProps,
   Popover,
@@ -45,18 +46,19 @@ export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
   return (
     <Popover placement="bottom" trigger="hover" isLazy={true}>
       <PopoverTrigger>
-        <Box
-          display="inline-block"
-          h="8"
-          w="8"
-          bgColor={color}
-          _hover={{ cursor: 'pointer' }}
-          key={item.number}
-          onPointerDown={() => window.open(item.webUrl, '_blank')}
-          onMouseEnter={() => setSelectedItem(item.number)}
-          onMouseLeave={() => setSelectedItem(null)}
-          {...rest}
-        ></Box>
+        <Link href={item.webUrl} target="_blank">
+          <Box
+            display="inline-block"
+            h="8"
+            w="8"
+            bgColor={color}
+            _hover={{ cursor: 'pointer' }}
+            key={item.number}
+            onMouseEnter={() => setSelectedItem(item.number)}
+            onMouseLeave={() => setSelectedItem(null)}
+            {...rest}
+          ></Box>
+        </Link>
       </PopoverTrigger>
       <PopoverContent w="20rem">
         <PopoverHeader pt={4} fontWeight="bold" border="0">
