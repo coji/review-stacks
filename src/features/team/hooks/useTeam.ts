@@ -46,7 +46,7 @@ const buildTeam = (isShowMerged: boolean, team?: Team) => {
 
   return {
     ...team,
-    ...buildReviewStacks(
+    reviewStacks: buildReviewStacks(
       team.mergerequests.filter((mr) =>
         isShowMerged ? true : mr.state !== 'merged'
       )

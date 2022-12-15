@@ -9,10 +9,16 @@ export interface ReviewStackItem {
   pullrequests: PullRequest[] // Types.MergeRequestSchema[]
 }
 
+export interface ReviewStacks {
+  users: Record<string, User>
+  assignees: ReviewStackItem[]
+  reviewers: ReviewStackItem[]
+}
+
 export interface PullRequest {
   id: number
   number: number // pull number or iid
-  assignee?: User
+  assignee: User | null
   author: User
   reviewers: User[]
   title: string

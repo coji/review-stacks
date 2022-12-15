@@ -51,12 +51,12 @@ const Home: NextPage = () => {
         <ReviewStacksBody>
           <StackList
             title="作成した、またはアサインされているMR"
-            items={teamData.assignees}
+            items={teamData.reviewStacks.assignees}
             type="assignee"
           />
           <StackList
             title="レビュー中のMR一覧"
-            items={teamData.reviewers}
+            items={teamData.reviewStacks.reviewers}
             type="reviewer"
           />
         </ReviewStacksBody>

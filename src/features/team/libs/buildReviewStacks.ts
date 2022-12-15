@@ -1,5 +1,6 @@
 import type { Types } from '@gitbeaker/node/dist/types'
 import {
+  ReviewStacks,
   ReviewStackItem,
   PullRequest,
   UserInfo,
@@ -17,9 +18,9 @@ const convertGitLabUserToUser = (
 }
 
 const convertGitLabUserToUserOptional = (
-  user?: Omit<Types.UserSchema, 'created_at'>
+  user: Omit<Types.UserSchema, 'created_at'> | null
 ) => {
-  if (!user) return undefined
+  if (!user) return null
   return convertGitLabUserToUser(user)
 }
 
@@ -86,21 +87,18 @@ const buildAssigneesAndReviewers = (
 const buildReviewStackItems = (
   users: { [key: string]: UserInfo },
   assigneesOrReviewers: Map<string, PullRequest[]>
-) => {
+): ReviewStackItem[] => {
   return Array.from(assigneesOrReviewers.entries())
-    .map(
-      (entry) =>
-        ({
-          user: users[entry[0]],
-          pullrequests: entry[1]
-        } satisfies ReviewStackItem)
-    )
+    .map((entry) => ({
+      user: users[entry[0]],
+      pullrequests: entry[1]
+    }))
     .sort((a, b) => (b.pullrequests.length >= a.pullrequests.length ? 1 : -1))
 }
 
 export const buildReviewStacks = (
   mergerequests: Types.MergeRequestSchema[]
-) => {
+): ReviewStacks => {
   const users: Record<string, UserInfo> = {}
   const assignees = new Map<string, PullRequest[]>()
   const reviewers = new Map<string, PullRequest[]>()

@@ -1,4 +1,5 @@
 import type { Types } from '@gitbeaker/node'
+import type { ReviewStacks } from '~/interfaces/model'
 
 export interface Team {
   id: string
@@ -6,5 +7,6 @@ export interface Team {
   projectId: string
   privateToken: string
   mergerequests: Types.MergeRequestSchema[]
+  reviewStacks: ReviewStacks
   updatedAt: string
 }
