@@ -4,7 +4,7 @@ import { useAuthAction } from '~/features/auth/hooks/useAuthAction'
 export const AuthSignOutButton = () => {
   const { signOut } = useAuthAction()
   return (
-    <Button variant="outline" colorScheme="blue" onClick={() => signOut()}>
+    <Button colorScheme="blue" onClick={() => signOut()} variant="outline">
       サインアウト
     </Button>
   )

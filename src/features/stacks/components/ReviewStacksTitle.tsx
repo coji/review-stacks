@@ -17,12 +17,12 @@ export const ReviewStacksTitle = ({
       <Heading color="gray.600" size="sm">
         <Box>{title}</Box>
       </Heading>
-      <Box fontSize="xs" color="gray.500">
+      <Box color="gray.500" fontSize="xs">
         最終更新: {updatedAt}
       </Box>
     </Box>
 
-    <Box textAlign="right" fontSize="sm">
+    <Box fontSize="sm" textAlign="right">
       <Switch
         isChecked={isShowMerged}
         onChange={() => onToggleShowMerged(!isShowMerged)}

@@ -1,17 +1,16 @@
-import dayjs from 'dayjs'
-import 'dayjs/plugin/timezone'
+import dayjs, { extend, locale } from 'dayjs'
 import 'dayjs/plugin/isSameOrAfter'
 import 'dayjs/plugin/isSameOrBefore'
 import relativeTime from 'dayjs/plugin/relativeTime'
-dayjs.extend(relativeTime)
+extend(relativeTime)
 
 import 'dayjs/locale/ja'
-dayjs.locale('ja')
+locale('ja')
 
 import utc from 'dayjs/plugin/utc'
-dayjs.extend(utc)
+extend(utc)
 import timezone from 'dayjs/plugin/timezone'
-dayjs.extend(timezone)
+extend(timezone)
 dayjs.tz.setDefault('Asia/Tokyo')
 
 export default dayjs

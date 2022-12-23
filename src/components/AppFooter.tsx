@@ -1,23 +1,23 @@
 import { Box, Text, Container, Stack, Flex, Link, Icon } from '@chakra-ui/react'
 
 export const AppFooter = () => (
-  <Box as="footer" bg="gray.50" color="gray.600" py="4" fontSize="sm">
+  <Box as="footer" py="4" color="gray.600" fontSize="sm" bg="gray.50">
     <Container as={Stack} maxW={'6xl'} py={4} textAlign="center">
       <Stack>
         <Box textAlign="center">
-          <Flex direction="row" gap={2} flexWrap="wrap" justifyContent="center">
+          <Flex justify="center" wrap="wrap" direction="row" gap={2}>
             <Link
+              w="28"
               href="https://github.com/coji/review-stacks"
               isExternal
-              w="28"
             >
               GitHub
             </Link>
 
             <Link
+              w="28"
               href="https://www.messenger.com/t/679524290/"
               isExternal
-              w="28"
             >
               お問い合わせ{' '}
               <Icon color="facebook.500">

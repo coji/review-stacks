@@ -25,14 +25,14 @@ export const AppNavbar = () => {
   return (
     <Flex
       as="nav"
-      alignItems="center"
-      width="full"
-      py="2"
+      align="center"
+      w="full"
       px={{ base: '2', md: '4' }}
+      py="2"
+      shadow="sm"
       bgColor="gray.50"
-      boxShadow="sm"
     >
-      <Link as={NextLink} href="/" _hover={{ textDecoration: 'none' }}>
+      <Link as={NextLink} _hover={{ textDecoration: 'none' }} href="/">
         <Heading
           fontWeight="extrabold"
           bgGradient="linear(to-l, #2879CA, #00FF80)"
@@ -48,8 +48,8 @@ export const AppNavbar = () => {
         <Menu>
           <MenuButton>
             <Avatar
-              size="sm"
               name={currentUser.displayName || undefined}
+              size="sm"
               src={currentUser.photoURL || undefined}
             ></Avatar>
           </MenuButton>
@@ -57,14 +57,14 @@ export const AppNavbar = () => {
             <MenuItem>
               <Stack direction="row">
                 <Avatar
-                  size="sm"
                   name={currentUser.displayName || undefined}
+                  size="sm"
                   src={currentUser.photoURL || undefined}
                 />
 
                 <Box>
                   <Text fontSize="sm">{currentUser.displayName}</Text>
-                  <Text fontSize="xs" color="gray.500">
+                  <Text color="gray.500" fontSize="xs">
                     {currentUser.email}
                   </Text>
                 </Box>

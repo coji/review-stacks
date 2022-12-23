@@ -5,7 +5,7 @@ interface ReviewStacksBodyProps {
 }
 export const ReviewStacksBody = ({ children }: ReviewStacksBodyProps) => (
   <Stack p="4">
-    <Grid gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }} gap="4">
+    <Grid gap="4" templateColumns={{ base: '1fr', md: '1fr 1fr' }}>
       {children.map((child) => child)}
     </Grid>
   </Stack>

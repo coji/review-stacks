@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react'
+import { Box, Grid } from '@chakra-ui/react'
 import Div100vh from 'react-div-100vh'
 import { AppNavbar } from '../components/AppNavbar'
 import { AppFooter } from '../components/AppFooter'
@@ -10,15 +10,15 @@ interface AppDefaultLayoutProps {
 export const AppDefaultLayout = ({ children }: AppDefaultLayoutProps) => {
   return (
     <Div100vh>
-      <Box display="grid" gridTemplateRows="auto 1fr auto" minH="100vh">
+      <Grid templateRows="auto 1fr auto" minH="100vh">
         <AppNavbar />
 
-        <Box as="main" p={{ base: '0', sm: '2' }} overflow="auto" flexGrow="1">
+        <Box as="main" flexGrow="1" overflow="auto" p={{ base: '0', sm: '2' }}>
           {children}
         </Box>
 
         <AppFooter />
-      </Box>
+      </Grid>
     </Div100vh>
   )
 }

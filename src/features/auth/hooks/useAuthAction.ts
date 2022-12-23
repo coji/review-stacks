@@ -3,14 +3,15 @@ import {
   AuthError,
   AuthProvider,
   signInWithRedirect,
-  signOut
+  signOut,
+  GithubAuthProvider,
+  OAuthProvider
 } from 'firebase/auth'
 import {
   useMutation,
   UseMutationOptions,
   UseMutationResult
 } from '@tanstack/react-query'
-import { GithubAuthProvider, OAuthProvider } from 'firebase/auth'
 import { auth } from '~/libs/firebase'
 
 export function useAuthSignInWithRedirect(

@@ -32,11 +32,11 @@ export const StackList = ({ title, items, type }: StackListProps) => {
 
   return (
     <Box>
-      <Box fontWeight="bold" my="4" borderBottom="2px" borderColor="gray.200">
+      <Box my="4" fontWeight="bold" borderColor="gray.200" borderBottom="2px">
         {title}
       </Box>
 
-      <Grid gridTemplateColumns="auto auto 1fr" gap="4">
+      <Grid gap="4" templateColumns="auto auto 1fr">
         {items.map((item) => {
           const isActive =
             type === selectedUser?.type &&
@@ -44,22 +44,22 @@ export const StackList = ({ title, items, type }: StackListProps) => {
           return (
             <Fragment key={item.user.username}>
               <GridItem>
-                <Popover placement="bottom" trigger="hover" isLazy={true}>
+                <Popover isLazy={true} placement="bottom" trigger="hover">
                   <PopoverTrigger>
                     <Stack
-                      direction="row"
                       align="center"
+                      direction="row"
+                      color={isActive ? 'blue.500' : 'inherit'}
+                      borderWidth="1px"
+                      borderColor={isActive ? 'blue.500' : 'transparent'}
+                      _hover={{
+                        cursor: 'default'
+                      }}
                       onMouseEnter={() =>
                         setSelectedUser({ username: item.user.username, type })
                       }
                       onMouseLeave={() => setSelectedUser(null)}
-                      color={isActive ? 'blue.500' : 'inherit'}
-                      borderColor={isActive ? 'blue.500' : 'transparent'}
-                      borderWidth="1px"
                       rounded="md"
-                      _hover={{
-                        cursor: 'default'
-                      }}
                     >
                       <Avatar size="sm" src={item.user.avatar} />
                       <Box w="9rem" whiteSpace="nowrap">
@@ -76,18 +76,18 @@ export const StackList = ({ title, items, type }: StackListProps) => {
                       <Stack>
                         {item.pullrequests.map((pr, idx) => (
                           <Stack
-                            direction="row"
                             key={pr.id}
+                            direction="row"
                             onMouseEnter={() => setSelectedItem(pr.number)}
                             onMouseLeave={() => setSelectedItem(null)}
                           >
                             <Box noOfLines={1}>
                               {idx + 1}.{' '}
                               <Link
-                                target="_blank"
-                                href={pr.webUrl}
-                                textDecoration={'underline'}
                                 color={'blue.500'}
+                                textDecoration={'underline'}
+                                href={pr.webUrl}
+                                target="_blank"
                               >
                                 {pr.title}
                               </Link>
@@ -96,21 +96,21 @@ export const StackList = ({ title, items, type }: StackListProps) => {
                         ))}
                       </Stack>
                     </PopoverBody>
-                    <PopoverFooter border="none" display="flex"></PopoverFooter>
+                    <PopoverFooter display="flex" border="none"></PopoverFooter>
                   </PopoverContent>
                 </Popover>
               </GridItem>
 
               <GridItem>
-                <Center whiteSpace="nowrap" h="8" w="8">
+                <Center w="8" h="8" whiteSpace="nowrap">
                   {item.pullrequests.length}件
                 </Center>
               </GridItem>
 
               <GridItem
-                display="flex"
                 alignItems="center"
                 gap="4"
+                display="flex"
                 overflow="auto"
               >
                 <Box whiteSpace="nowrap">

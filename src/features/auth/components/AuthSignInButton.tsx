@@ -8,8 +8,8 @@ export const AuthSignInButton = () => {
 
   return (
     <Button
-      isLoading={isLoading}
       colorScheme="slack"
+      isLoading={isLoading}
       onClick={() => {
         setIsLoading(true)
         // エラー時など遷移できない場合は復帰させる

@@ -2,7 +2,7 @@ import { memo } from 'react'
 import {
   Link,
   Box,
-  BoxProps,
+  type BoxProps,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -44,16 +44,16 @@ export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
   })
 
   return (
-    <Popover placement="bottom" trigger="hover" isLazy={true}>
+    <Popover isLazy={true} placement="bottom" trigger="hover">
       <PopoverTrigger>
         <Link href={item.webUrl} target="_blank">
           <Box
-            display="inline-block"
-            h="8"
-            w="8"
-            bgColor={color}
-            _hover={{ cursor: 'pointer' }}
             key={item.number}
+            display="inline-block"
+            w="8"
+            h="8"
+            _hover={{ cursor: 'pointer' }}
+            bgColor={color}
             onMouseEnter={() => setSelectedItem(item.number)}
             onMouseLeave={() => setSelectedItem(null)}
             {...rest}
@@ -63,11 +63,11 @@ export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
       <PopoverContent w="20rem">
         <PopoverHeader pt={4} fontWeight="bold" border="0">
           <Stack
-            direction="row"
             as="a"
+            direction="row"
+            _hover={{ color: 'blue.500' }}
             href={item.webUrl}
             target="_blank"
-            _hover={{ color: 'blue.500' }}
           >
             <Box>[{item.number}]</Box>
             <Box noOfLines={1}>{item.title}</Box>
@@ -117,14 +117,14 @@ export const StackItem = memo(({ item, ...rest }: StackItemProps) => {
             </Table>
           </TableContainer>
         </PopoverBody>
-        <PopoverFooter border="none" display="flex">
+        <PopoverFooter display="flex" border="none">
           <Spacer />
           <Button
             as="a"
-            target="_blank"
+            colorScheme="blue"
             href={item.webUrl}
             size="sm"
-            colorScheme="blue"
+            target="_blank"
           >
             GitLabで開く
           </Button>
