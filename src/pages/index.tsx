@@ -48,6 +48,7 @@ const Home: NextPage = () => {
           isShowMerged={isShowMerged}
           onToggleShowMerged={(val) => setIsShowMerged(val)}
         />
+
         <ReviewStacksBody>
           <StackList
             title="作成した、またはアサインされているMR"

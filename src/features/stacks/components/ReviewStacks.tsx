@@ -5,5 +5,7 @@ interface ReviewStacksProps {
 }
 
 export const ReviewStacks = ({ children }: ReviewStacksProps) => (
-  <Stack>{children}</Stack>
+  <Stack gap="0" p="4">
+    {children}
+  </Stack>
 )

@@ -21,7 +21,14 @@ export default async function handler(
     return res.status(500).send('authorization failure')
   }
 
-  const team = await getTeam(teamId)
+  let team: Awaited<ReturnType<typeof getTeam>> | null = null
+  try {
+    team = await getTeam(teamId)
+  } catch (e) {
+    console.log('error!!!!', e)
+  }
+  if (team === null) return
+
   let mergerequests: Types.MergeRequestSchema[] = []
   if (team.mergerequests) mergerequests = team.mergerequests
 

@@ -32,7 +32,13 @@ export const StackList = ({ title, items, type }: StackListProps) => {
 
   return (
     <Box>
-      <Box my="4" fontWeight="bold" borderColor="gray.200" borderBottom="2px">
+      <Box
+        my="4"
+        color="gray.600"
+        fontWeight="bold"
+        borderColor="gray.600"
+        borderBottom="2px"
+      >
         {title}
       </Box>
 
