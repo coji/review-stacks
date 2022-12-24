@@ -8,6 +8,7 @@ import {
   OAuthProvider
 } from 'firebase/auth'
 import {
+  useQueryClient,
   useMutation,
   UseMutationOptions,
   UseMutationResult
@@ -31,12 +32,13 @@ export function useAuthSignInWithRedirect(
 }
 
 export function useAuthSignOut(
-  auth: Auth,
-  useMutationOptions?: UseMutationOptions<void, AuthError, void>
+  auth: Auth
 ): UseMutationResult<void, AuthError, void> {
-  return useMutation<void, AuthError, void>(() => {
-    return signOut(auth)
-  }, useMutationOptions)
+  const queryClient = useQueryClient()
+  return useMutation(async () => {
+    await signOut(auth)
+    queryClient.setQueryData(['user'], () => null)
+  })
 }
 
 export const useAuthAction = () => {
@@ -62,9 +64,7 @@ export const useAuthAction = () => {
     return authSignIn.mutate({ provider })
   }
 
-  const signOut = () => {
-    return authSignOut.mutate()
-  }
+  const signOut = () => authSignOut.mutate()
 
   return {
     signInWithGitHub,
