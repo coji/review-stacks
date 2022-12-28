@@ -75,7 +75,7 @@ export const useTeam = (isShowMerged: boolean) => {
   return useQuery(
     ['team', teamId],
     async () => {
-      await update()
+      void update() // async update
       if (teamId) return await fetchTeam(teamId)
     },
     {
