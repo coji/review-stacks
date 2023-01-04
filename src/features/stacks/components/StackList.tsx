@@ -36,8 +36,8 @@ export const StackList = ({ title, items, type }: StackListProps) => {
         my="4"
         color="gray.600"
         fontWeight="bold"
-        borderColor="gray.600"
         borderBottom="2px"
+        borderBottomColor="gray.300"
       >
         {title}
       </Box>
