@@ -5,21 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Next.js サーバサイド用のデバッガ設定",
-      "type": "node",
-      "request": "attach",
-      "skipFiles": ["<node_internals>/**"],
-      "port": 9229
-    },
-    {
-      "name": "Next.js クライアントサイド用のデバッガ設定",
-      "type": "chrome",
+      "name": "Next.js: full stack",
+      "type": "node-terminal",
       "request": "launch",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}",
-      "sourceMaps": true,
-      "sourceMapPathOverrides": {
-        "webpack://_N_E/*": "${webRoot}/*"
+      "command": "pnpm run dev",
+      "serverReadyAction": {
+        "pattern": "started server on .+, url: (https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
       }
     }
   ]
