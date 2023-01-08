@@ -24,6 +24,7 @@ export const ReviewStacksTitle = ({
 
     <Box fontSize="sm" textAlign="right">
       <Switch
+        _hover={{ color: 'blue.500', cursor: 'pointer' }}
         isChecked={isShowMerged}
         onChange={() => onToggleShowMerged(!isShowMerged)}
       >
