@@ -11,13 +11,13 @@ export const AppDefaultLayout = ({ children }: AppDefaultLayoutProps) => {
     <Grid
       templateRows="auto 1fr auto"
       css={`
-        height: 100vh;
-        height: 100dvh;
+        min-height: 100vh;
+        min-height: 100dvh;
       `}
     >
       <AppNavbar />
 
-      <Box as="main" flexGrow="1" overflow="auto" p={{ base: '0', sm: '2' }}>
+      <Box as="main" p={{ base: '0', sm: '2' }}>
         {children}
       </Box>
 
