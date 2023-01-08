@@ -1,23 +1,28 @@
-import {
-  signInWithRedirect,
-  signOut,
-  OAuthProvider,
-  signInWithPopup
-} from 'firebase/auth'
+import { signOut, OAuthProvider, signInWithPopup } from 'firebase/auth'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { auth } from '~/libs/firebase'
-
-export const useAuthSignInWithRedirect = () => {
-  return useMutation(() => {
-    const provider = new OAuthProvider('oidc.slack')
-    return signInWithRedirect(auth, provider)
-  })
-}
+import { initTeamId } from '../utils/authUtils'
 
 export const useAuthSignInWithPopup = () => {
-  return useMutation(() => {
+  const queryClient = useQueryClient()
+  return useMutation(async () => {
     const provider = new OAuthProvider('oidc.slack')
-    return signInWithPopup(auth, provider)
+
+    const userCredential = await signInWithPopup(auth, provider)
+    if (!auth.currentUser) {
+      throw new Error('ログインに失敗しました。')
+    }
+    const teamId = await initTeamId(auth, userCredential)
+    if (!teamId) {
+      throw new Error('チームIDの取得に失敗しました。')
+    }
+
+    queryClient.setQueryData(['user'], {
+      displayName: auth.currentUser.displayName,
+      email: auth.currentUser.email,
+      photoURL: auth.currentUser.photoURL,
+      teamId
+    })
   })
 }
 

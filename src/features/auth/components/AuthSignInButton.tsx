@@ -1,8 +1,8 @@
 import { Button, chakra } from '@chakra-ui/react'
-import { useAuthSignInWithRedirect } from '~/features/auth/hooks/useAuthAction'
+import { useAuthSignInWithPopup } from '~/features/auth/hooks/useAuthAction'
 
 export const AuthSignInButton = () => {
-  const { isLoading, mutate } = useAuthSignInWithRedirect()
+  const { isLoading, mutate } = useAuthSignInWithPopup()
 
   return (
     <Button
