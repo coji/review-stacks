@@ -16,11 +16,11 @@ import {
   Avatar
 } from '@chakra-ui/react'
 import { useAuth } from '~/features/auth/hooks/useAuth'
-import { useAuthAction } from '~/features/auth/hooks/useAuthAction'
+import { useAuthSignOut } from '~/features/auth/hooks/useAuthAction'
 
 export const AppNavbar = () => {
   const { currentUser, isAuthChecking } = useAuth()
-  const { signOut } = useAuthAction()
+  const { mutate: signOutMutate } = useAuthSignOut()
 
   return (
     <Flex
@@ -71,7 +71,7 @@ export const AppNavbar = () => {
               </Stack>
             </MenuItem>
             <Divider />
-            <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
+            <MenuItem onClick={() => signOutMutate()}>Sign out</MenuItem>
           </MenuList>
         </Menu>
       ) : isAuthChecking ? (

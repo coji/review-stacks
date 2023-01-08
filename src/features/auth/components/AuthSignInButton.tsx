@@ -1,21 +1,15 @@
-import { useState } from 'react'
 import { Button, chakra } from '@chakra-ui/react'
-import { useAuthAction } from '~/features/auth/hooks/useAuthAction'
+import { useAuthSignInWithRedirect } from '~/features/auth/hooks/useAuthAction'
 
 export const AuthSignInButton = () => {
-  const { signInWithSlack } = useAuthAction()
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { isLoading, mutate } = useAuthSignInWithRedirect()
 
   return (
     <Button
       colorScheme="slack"
       isLoading={isLoading}
       onClick={() => {
-        setIsLoading(true)
-        // エラー時など遷移できない場合は復帰させる
-        window.setTimeout(() => setIsLoading(false), 10000)
-
-        signInWithSlack()
+        mutate()
       }}
     >
       <chakra.svg

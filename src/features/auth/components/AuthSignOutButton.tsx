@@ -1,10 +1,15 @@
 import { Button } from '@chakra-ui/react'
-import { useAuthAction } from '~/features/auth/hooks/useAuthAction'
+import { useAuthSignOut } from '~/features/auth/hooks/useAuthAction'
 
 export const AuthSignOutButton = () => {
-  const { signOut } = useAuthAction()
+  const { isLoading, mutate } = useAuthSignOut()
   return (
-    <Button colorScheme="blue" onClick={() => signOut()} variant="outline">
+    <Button
+      colorScheme="blue"
+      isLoading={isLoading}
+      onClick={() => mutate()}
+      variant="outline"
+    >
       サインアウト
     </Button>
   )
