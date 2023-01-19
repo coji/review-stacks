@@ -7,8 +7,10 @@ export const useAuthSignInWithPopup = () => {
   const queryClient = useQueryClient()
   return useMutation(async () => {
     const provider = new OAuthProvider('oidc.slack')
-    if (process.env.SLACK_TEAM_ID) {
-      provider.setCustomParameters({ team: process.env.SLACK_TEAM_ID })
+    if (process.env.NEXT_PUBLIC_SLACK_TEAM_ID) {
+      provider.setCustomParameters({
+        team: process.env.NEXT_PUBLIC_SLACK_TEAM_ID
+      })
     }
     const userCredential = await signInWithPopup(auth, provider)
     if (!auth.currentUser) {
